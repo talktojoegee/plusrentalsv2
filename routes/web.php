@@ -44,7 +44,7 @@ Route::prefix('resident')->group(function(){
 Route::get('/profile', [App\Http\Controllers\Resident\ResidentController::class, 'profile'])
     ->name('profile');
 Route::get('/my-leases', [App\Http\Controllers\Resident\ResidentController::class, 'myLeases'])
-    ->name('my-leases');
+        ->name('my-leases');
 Route::get('/tenant/property/detail/{slug}', [App\Http\Controllers\Resident\ResidentController::class, 'propertyDetails'])
     ->name('listing-property-detail');
 Route::get('/tenant/pay-rent', [App\Http\Controllers\Resident\ResidentController::class, 'payRent'])
