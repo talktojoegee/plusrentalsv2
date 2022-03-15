@@ -4,8 +4,8 @@
         <div class="container">
             <div class="left-side">
                 <div id="logo">
-                    <a href="index.html">
-                        <img src="/images2/logo.png" alt="">
+                    <a href="{{route('home')}}">
+                        <img src="/images/logo.png" alt="">
                     </a>
                 </div>
                 <div class="mmenu-trigger">
@@ -37,15 +37,13 @@
                             </span>
                             <div class="user-name-title">Hi, {{Auth::user()->getApplicant->first_name ?? ''}}!</div></div>
                         <ul>
-                            <li><a href="my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
-                            <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarks</a></li>
-                            <li><a href="my-properties.html"><i class="sl sl-icon-docs"></i> My Property</a></li>
-                            <li><a href="add-new-property.html"><i class="sl sl-icon-docs"></i> New Property</a></li>
-                            <li><a href="change-password.html"><i class="sl sl-icon-docs"></i> Change Password</a></li>
-                            <li><a href="index-2.html"><i class="sl sl-icon-power"></i> Log Out</a></li>
+                            <li><a href="{{route('profile')}}"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                            <li><a href="{{route('my-leases')}}"><i class="icon-line-awesome-exchange"></i> My Lease</a></li>
+                            <li><a href="{{route('my-reports')}}"><i class="icon-line-awesome-book"></i> Reports</a></li>
+                            <li><a href="{{route('settings')}}"><i class="sl sl-icon-wrench"></i> Settings</a></li>
+                            <li><a href="{{route('logout')}}"><i class="sl sl-icon-power"></i> Log Out</a></li>
                         </ul>
                     </div>
-                    <a href="add-new-property.html" class="button border"><i class="icon-feather-plus-circle"></i> <span>Create Property</span></a>
                 </div>
             </div>
         </div>
