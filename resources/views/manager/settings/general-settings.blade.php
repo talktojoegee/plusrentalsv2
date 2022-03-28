@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Company Details
+
 @endsection
 @section('current-page-brief')
 
@@ -24,7 +24,7 @@
         <div class="card-block">
             <div class="row">
                 <div class="col-lg-12 col-xl-12">
-                    <div class="sub-title">Company Settings</div>
+                    <div class="sub-title">General Settings</div>
                     @if(session()->has('success'))
                         <div class="alert alert-success background-success">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -48,17 +48,9 @@
                             <div class="slide"></div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Payment Integration</a>
-                            <div class="slide"></div>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#messages3" role="tab">Bulk SMS</a>
                             <div class="slide"></div>
                         </li>
-                       <!-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#settings3" role="tab">Settings</a>
-                            <div class="slide"></div>
-                        </li>-->
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content card-block">
@@ -219,52 +211,6 @@
                                                             <a href="{{url()->previous()}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i>Cancel</a>
                                                             <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i>Save Changes</button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="profile3" role="tabpanel">
-                            <div class="card">
-                                <div class="card-block">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-lg-12">
-                                            <form action="{{route('app-payment-integration')}}" method="post">
-                                                @csrf
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="mb-0 card-title">Payment Integration</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p>{{config('app.name')}} uses <a href="https://www.paystack.com" target="_blank">Paystack</a> to enable businesses receive payment directly to their Paystack account. This is possible through the use of both the <code>secret</code> and <code>public</code> keys provided by Paystack.</p>
-                                                        <p>Copy both your <code>Live Public Key</code> and <code>Live Secret Key</code> and paste them in the fields provided below.</p>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="form-label">Live Public Key</label>
-                                                                    <input type="text" class="form-control" value="{{old('public_key',Auth::user()->getUserCompany->public_key) }}" name="public_key" placeholder="Live Public Key">
-                                                                    @error('public_key') <i class="text-danger">{{$message}}</i>@enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="form-label">Live Secret Key</label>
-                                                                    <input type="text" class="form-control" name="secret_key" value="{{old('secret_key',Auth::user()->getUserCompany->secret_key)}}" placeholder="Live Secret Key">
-                                                                    @error('secret_key') <i class="text-danger">{{$message}}</i>@enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <p><strong class="text-danger">Note:</strong> Use <a
-                                                                        href="javascript:void(0);">http://plusrentals.com/process/payment</a> as your callback URL</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer text-right">
-                                                        <a href="{{url()->previous()}}" class="btn btn-danger">Cancle</a>
-                                                        <button type="submit" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                 </div>
                                             </form>

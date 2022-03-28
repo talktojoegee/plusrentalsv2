@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Company extends Model
 {
@@ -28,7 +29,7 @@ class Company extends Model
 
     public function setNewCompany(){
         $current = Carbon::now();
-        $url = substr(sha1(time()),29,40);
+        $url =  substr(sha1(time()),29,40);
         $key = "key_".substr(sha1(time()),23,40);
         $company = new Company();
         $company->slug = $url;
@@ -108,5 +109,14 @@ class Company extends Model
         $tenant->secret_key = $request->secret_key ?? Auth::user()->getUserCompany->secret_key;
         $tenant->public_key = $request->public_key ?? Auth::user()->getUserCompany->public_key;
         $tenant->save();
+    }
+
+    public function setBankDetails(Request $request){
+        $bank = Company::find(Auth::user()->company_id);
+        $bank->bank = $request->bank_name;
+        $bank->account_name = $request->account_name;
+        $bank->account_no = $request->account_no;
+        $bank->sort_code = $request->sort_code ?? '' ;
+        $bank->save();
     }
 }

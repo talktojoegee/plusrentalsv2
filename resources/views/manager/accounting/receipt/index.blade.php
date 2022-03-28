@@ -13,8 +13,6 @@
 @section('event-area')
     <div class="btn-group">
         <a href="{{route('manage-receipts')}}" class="btn btn-secondary btn-mini"><i class="icofont icofont-tags"></i>Manage Receipt</a>
-        <a href="{{route('add-new-lease')}}" class="btn btn-primary btn-mini"><i class="icofont icofont-tasks"></i>Issue Receipt</a>
-        <button class="btn btn-danger btn-mini"><i class="icofont icofont-megaphone"></i>Reports</button>
     </div>
 @endsection
 @section('extra-styles')

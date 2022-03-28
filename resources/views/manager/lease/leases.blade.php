@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Leases
+
 @endsection
 @section('current-page-brief')
 
@@ -25,7 +25,12 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-sm-12">
-                            <p>List of all leases</p>
+                            <p>Here's a list of all your tenant who are currently renting or rented your property in the past.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+
                             <div class="table-responsive">
                                 <table id="focus-key" class="table table-striped table-bordered nowrap dataTable" role="grid" aria-describedby="focus-key_info" style="position: relative;">
                                     <thead>
@@ -33,7 +38,7 @@
                                         <th class="sorting_asc">S/No.</th>
                                         <th class="sorting_asc">Tenant</th>
                                         <th class="sorting" >Property</th>
-                                        <th class="sorting"  >Rent Amount</th>
+                                        <th class="sorting"  > Amount</th>
                                         <th class="sorting"  >Start Date</th>
                                         <th class="sorting"  >End Date</th>
                                         <th class="sorting"  >Status</th>
@@ -50,8 +55,8 @@
                                             <td>{{$applicant->getApplicant->first_name ?? ''}} {{$applicant->getApplicant->surname ?? ''}}</td>
                                             <td>{{ strlen($applicant->getProperty->property_name) > 35 ? substr($applicant->getProperty->property_name,0,35).'...' : $applicant->getProperty->property_name  }}</td>
                                             <td class="text-right">{{number_format($applicant->rent_amount,2)}}</td>
-                                            <td class="text-success">{{date('d-M,Y', strtotime($applicant->start_date))}}</td>
-                                            <td class="text-danger">{{date('d-M,Y', strtotime($applicant->end_date))}}</td>
+                                            <td class="text-success">{{date('d M,Y', strtotime($applicant->start_date))}}</td>
+                                            <td class="text-danger">{{date('d M,Y', strtotime($applicant->end_date))}}</td>
                                             <td>
                                                 @switch($applicant->status)
                                                     @case(0)
@@ -80,7 +85,7 @@
                                         <th >S/No.</th>
                                         <th >Tenant</th>
                                         <th >Property</th>
-                                        <th >Rent Amount</th>
+                                        <th > Amount</th>
                                         <th >Start Date</th>
                                         <th >End Date</th>
                                         <th >Status</th>

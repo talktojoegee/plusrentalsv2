@@ -17,8 +17,11 @@
  <link rel="stylesheet" href="/assets/css/select2.css">
 @endsection
 @section('main-content')
+    <form action="{{route('store-new-property')}}" method="post" enctype="multipart/form-data">
+        @csrf
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+
+        <div class="col-lg-8 col-md-8 col-sm-8">
            <div class="card">
                 <div class="card-header">
                     <h5>Add New Property</h5>
@@ -50,7 +53,7 @@
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <i class="ti-close text-white"></i>
                                             </button>
-                                            <strong>Whoops!</strong> You've reached the maximum ({{Auth::user()->getUserCompany->no_of_units}}) number units you manage. You may  <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add more units">
+                                            <strong>Whoops!</strong> You've reached the maximum ({{Auth::user()->getUserCompany->no_of_units}}) number of units you manage. You may  <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add more units">
                                                 <a href="button" class="btn btn-secondary btn-mini waves-effect waves-light"><i class="icofont icofont-info-square"></i>Add more units</a>
                                             </div>  continue posting new properties.
 
@@ -59,12 +62,19 @@
                                 </div>
                             </div>
 
-                            <form action="{{route('store-new-property')}}" method="post" enctype="multipart/form-data">
-                                @csrf
                                 <div class="row">
-                                    <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="col-md-12 col-sm-12 col-lg-12">
                                         <div class="form-group">
-                                            <label for="">Property Type</label>
+                                            <label for="">Property Title <sup class="text-danger">*</sup></label>
+                                            <input type="text" placeholder="Property Name" name="property_name" id="property_name" class="form-control" value="{{old('property_name')}}">
+                                            @error('property_name')
+                                            <i class="text-danger mt-2">{{$message}}</i>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="">Property Type<sup class="text-danger">*</sup></label>
                                             <select name="property_type" id="property_type" class="form-control js-example-basic-single" value="{{old('property_type')}}">
                                                 <option disabled selected>--Select property type--</option>
                                                 <option value="1">Apartment</option>
@@ -79,16 +89,8 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-sm-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="">Property Name</label>
-                                            <input type="text" placeholder="Property Name" name="property_name" id="property_name" class="form-control" value="{{old('property_name')}}">
-                                            @error('property_name')
-                                            <i class="text-danger mt-2">{{$message}}</i>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-lg-4">
+
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="">Unit No.</label>
                                             <input type="text" placeholder="Unit No." name="unit_no" id="unit_no" class="form-control" value="{{old('unit_no')}}">
@@ -99,9 +101,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="">Location</label>
+                                            <label for="">Location<sup class="text-danger">*</sup></label>
                                             <select name="location" id="location" class="form-control js-example-basic-single" value="{{old('location')}}">
                                                 <option disabled selected>--Select location--</option>
                                                 @foreach($locations as $location)
@@ -113,18 +115,18 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="">Area</label>
+                                            <label for="">Area<sup class="text-danger">*</sup></label>
                                             <div id="areaWrapper"></div>
                                             @error('area')
                                             <i class="text-danger mt-2">{{$message}}</i>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="col-md-12 col-sm-12 col-lg-12">
                                         <div class="form-group">
-                                            <label for="">Address</label>
+                                            <label for="">Address (Optional)</label>
                                             <textarea name="address" style="resize:none;" placeholder="Address"
                                                       class="form-control">{{old('address')}}</textarea>
                                             @error('address')
@@ -136,7 +138,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Description</label>
+                                            <label for="">Description<sup class="text-danger">*</sup></label>
                                             <textarea name="description" id="description" placeholder="Type description here..." style="resize: none;" class="form-control content">{{old('description')}}</textarea>
                                         </div>
                                     </div>
@@ -427,92 +429,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-sm-12 col-lg-12">
-                                        <div class="sub-title">Listing</div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for=""> Price</label>
-                                                    <input type="number" placeholder="Rental Price" step=""0.01 name="rental_price" class="form-control" id="rental_price" value="{{old('rental_price')}}">
-                                                    @error('rental_price')
-                                                    <i class="text-danger mt-2">{{$message}}</i>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="">Listing Type</label>
-                                                    <select name="listing_type" id="listing_type" class="form-control js-example-basic-single">
-                                                        <option disabled selected>--Select listing type--</option>
-                                                        <option value="1">For rent</option>
-                                                        <option value="2">For sale</option>
-                                                    </select>
-                                                    @error('listing_type')
-                                                    <i class="text-danger mt-2">{{$message}}</i>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="">Frequency</label>
-                                                    <select name="frequency" id="frequency" class="form-control js-example-basic-single">
-                                                        <option disabled selected>--Select frequency--</option>
-                                                        @foreach($frequencies as $frequency)
-                                                        <option value="{{$frequency->id}}">{{$frequency->frequency ?? '' }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('frequency')
-                                                    <i class="text-danger mt-2">{{$message}}</i>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-4 col-lg-4 col-sm-4">
-                                        <div class="sub-title">Property Gallery</div>
-                                        <div class="form-group">
-                                            <label for="">Upload images</label>
-                                            <input type="file" name="interior_images[]" multiple class="form-control-file">
-                                            @error('interior_images')
-                                                <i class="text-danger mt-2">{{$message}}</i>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 col-sm-4">
-                                        <div class="sub-title">Accounting</div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="">Use default property account<abbr title="Property default account will be used for this property.">?</abbr></label>
-                                                    <select name="default_account" id="default_account" class="form-control js-example-basic-single">
-                                                        <option disabled selected>-- Select account --</option>
-                                                        <option value="1">Yes</option>
-                                                        <option value="2">No</option>
-                                                    </select>
-                                                    @error('default_account')
-                                                    <i class="text-danger mt-2">{{$message}}</i>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-6" style="display: none;" id="accountWrapper">
-                                                <div class="form-group">
-                                                    <label for="">GL Account</label>
-                                                    <select name="property_account" id="property_account" class="form-control js-example-basic-single">
-                                                        <option disabled selected>--Select property account--</option>
-                                                        @foreach($accounts as $account)
-                                                            <option value="{{$account->glcode ?? ''}}">{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('property_account')
-                                                    <i class="text-danger mt-2">{{$message}}</i>
-                                                    @enderror
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -525,14 +442,78 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Add New Property</h5>
+                    <p>Add a new property to the system using the form below.</p>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="sub-title">Listing</div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="sub-title">Property Gallery</div>
+                                    <div class="form-group">
+                                        <label for="">Upload images<sup class="text-danger">*</sup></label>
+                                        <input type="file" name="interior_images[]" id="interior_images" multiple class="form-control-file">
+                                        @error('interior_images')
+                                        <i class="text-danger mt-2">{{$message}}</i>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label for=""> Price<sup class="text-danger">*</sup></label>
+                                        <input type="number" placeholder="Rental Price" step=""0.01 name="rental_price" class="form-control" id="rental_price" value="{{old('rental_price')}}">
+                                        @error('rental_price')
+                                        <i class="text-danger mt-2">{{$message}}</i>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label for="">Listing Type<sup class="text-danger">*</sup></label>
+                                        <select name="listing_type" id="listing_type" class="form-control js-example-basic-single">
+                                            <option disabled selected>--Select listing type--</option>
+                                            <option value="1">For rent</option>
+                                            <option value="2">For sale</option>
+                                        </select>
+                                        @error('listing_type')
+                                        <i class="text-danger mt-2">{{$message}}</i>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label for="">Frequency<sup class="text-danger">*</sup></label>
+                                        <select name="frequency" id="frequency" class="form-control js-example-basic-single">
+                                            <option disabled selected>--Select frequency--</option>
+                                            @foreach($frequencies as $frequency)
+                                                <option value="{{$frequency->id}}">{{$frequency->frequency ?? '' }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('frequency')
+                                        <i class="text-danger mt-2">{{$message}}</i>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+    </div>
+    </form>
 
 @endsection
 
@@ -558,14 +539,11 @@
                 });
             });
 
-            $(document).on('change', '#default_account', function(e){
-                e.preventDefault();
-                if($(this).val() == 2){
-                    $('#accountWrapper').show();
-                    $('.js-example-basic-single').select2();
-                }else{
-                    $('#accountWrapper').hide();
-                    $('.js-example-basic-single').select2();
+            $("#interior_images").on("change", function() {
+                if ($("#interior_images")[0].files.length > 7) {
+                    alert("You can select only 7 images max");
+                } else {
+                   // $("#imageUploadForm").submit();
                 }
             });
         });

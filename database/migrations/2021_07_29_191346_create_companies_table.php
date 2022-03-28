@@ -28,7 +28,7 @@ class CreateCompaniesTable extends Migration
             $table->string('phone_no')->nullable();
             $table->string('website')->nullable();
             $table->string('tagline')->nullable();
-            $table->string('logo')->default('logo.png')->nullable();
+            $table->string('logo')->default('realtor.png')->nullable();
             $table->string('favicon')->default('favicon.png')->nullable();
             $table->integer('no_of_units')->default(1)->comment('I manage _ units');
             $table->tinyInteger('paid')->default(0)->comment('0=free,1=paid');

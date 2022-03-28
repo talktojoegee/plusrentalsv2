@@ -4,17 +4,16 @@
 @endsection
 
 @section('current-page')
-    Add New User
+
 @endsection
 @section('current-page-brief')
-    Add New User
+
 @endsection
 
 @section('event-area')
     <div class="btn-group">
         <a class="btn btn-primary btn-mini" href="{{route('manage-users')}}"><i class="icofont icofont-tags"></i>Manage Users</a>
         <a class="btn btn-secondary btn-mini" href="{{route('add-new-user')}}"><i class="icofont icofont-tags"></i>Add New User</a>
-        <a class="btn btn-danger btn-mini" href=""><i class="icofont icofont-megaphone"></i>Reports</a>
     </div>
 @endsection
 @section('extra-styles')
@@ -27,7 +26,7 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="sub-title">Add New User</h5>
-                    <p><strong class="text-danger">Note:</strong> A random password will be generated and sent to this user via email.</p>
+                    <p><strong class="text-danger">Note:</strong> A default password of <code>password123</code> should be used by the new user to login. After which he/she can change <!--A random password will be generated and sent to this user via email.--></p>
                     @if (session()->has('success'))
                         <div class="alert alert-success background-success">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

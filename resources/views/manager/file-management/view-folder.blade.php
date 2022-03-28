@@ -1,13 +1,13 @@
 @extends('layouts.master-layout')
 @section('title')
- Folder - {{$folder->folder ?? ''}}
+
 @endsection
 
 @section('current-page')
-    Folder - {{$folder->folder ?? ''}}
+
 @endsection
 @section('current-page-brief')
-    Folder - {{$folder->folder ?? ''}}
+
 @endsection
 
 @section('event-area')

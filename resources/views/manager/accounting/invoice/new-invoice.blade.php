@@ -221,20 +221,20 @@
                                                 <tbody class="float-left pl-3">
                                                 <tr>
                                                     <th class="text-left"> <strong>Account Name:</strong> </th>
-                                                    <td>Auth::user()->tenantBankDetails->account_name ?? ''}}</td>
+                                                    <td>{{Auth::user()->getUserCompany->account_name ?? '-' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="text-left"><strong>Sort Code:</strong> </th>
-                                                    <td>Auth::user()->tenantBankDetails->sort_code ?? ''}}</td>
+                                                    <td>{{Auth::user()->getUserCompany->sort_code ?? '-' }}</td>
                                                 </tr>
 
                                                 <tr>
                                                     <th class="text-left"><strong>Account Number:</strong> </th>
-                                                    <td>Auth::user()->tenantBankDetails->account_number ?? ''}}</td>
+                                                    <td>{{Auth::user()->getUserCompany->account_no ?? '-' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="text-left"><strong>Bank:</strong> </th>
-                                                    <td>Auth::user()->tenantBankDetails->bank_name ?? ''}}</td>
+                                                    <td>{{Auth::user()->getUserCompany->bank ?? '-' }}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>

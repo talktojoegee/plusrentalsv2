@@ -21,7 +21,7 @@ class CreateActivityLogsTable extends Migration
             $table->unsignedBigInteger('rental_owner_id')->nullable();
             $table->unsignedBigInteger('care_taker_id')->nullable();
             $table->timestamp('log_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->text('activity')->nullable()->default('No activity registered.');
+            $table->text('activity')->nullable();
             $table->timestamps();
 
         });

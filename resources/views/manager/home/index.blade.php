@@ -12,8 +12,8 @@
 
 @section('event-area')
     <div class="btn-group">
-        <a href="{{route('add-lease-application')}}" class="btn btn-secondary btn-mini"><i class="icofont icofont-tags"></i>Manage Applications</a>
-        <a href="{{route('add-new-task')}}" class="btn btn-primary btn-mini"><i class="icofont icofont-tasks"></i>Add New Task</a>
+        <a href="{{route('lease-applications')}}" class="btn btn-secondary btn-mini"><i class="icofont icofont-tags"></i>Manage Applications</a>
+        <a href="{{route('property-report')}}" class="btn btn-primary btn-mini"><i class="icofont icofont-tasks"></i>Property Report</a>
     </div>
 @endsection
 @section('extra-styles')

@@ -11,7 +11,7 @@
 @endsection
 
 @section('event-area')
-    @include('manager.lease.partials._menu')
+    @include('manager.lease.partials._menu-application')
 @endsection
 @section('extra-styles')
     <link rel="stylesheet" type="text/css" href="\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">
@@ -121,7 +121,7 @@
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title text-uppercase">Application Details</h4>
+                                                            <h5 class="modal-title text-uppercase">Application Details</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>

@@ -4,16 +4,16 @@
 @endsection
 
 @section('current-page')
-    Tenant - {{$tenant->getApplicant->title ?? ''}} {{$tenant->getApplicant->first_name ?? ''}}
+
 @endsection
 @section('current-page-brief')
-    Tenant - {{$tenant->getApplicant->title ?? ''}} {{$tenant->getApplicant->first_name ?? ''}}
+
 @endsection
 
 @section('event-area')
     <div class="btn-group">
         <a class="btn btn-secondary btn-mini" href="{{route('manage-tenants')}}"><i class="icofont icofont-tags"></i>Manage Tenants</a>
-        <a class="btn btn-primary btn-mini" href="{{route('add-lease-application')}}"><i class="icofont icofont-tasks"></i>Add New Lease</a>
+        <a class="btn btn-primary btn-mini" href="{{route('add-new-lease')}}"><i class="icofont icofont-tasks"></i>Add New Lease</a>
     </div>
 @endsection
 @section('extra-styles')
@@ -49,10 +49,10 @@
                                 <a class="nav-link" data-toggle="tab" href="#property" role="tab">Property</a>
                                 <div class="slide"></div>
                             </li>
-                            <li class="nav-item">
+<!--                            <li class="nav-item">
                                 <a class="nav-link " data-toggle="tab" href="#home3" role="tab">Rental Owner</a>
                                 <div class="slide"></div>
-                            </li>
+                            </li>-->
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content card-block">
@@ -67,51 +67,24 @@
                                                             <div class="table-responsive">
                                                                 <table class="table m-0">
                                                                     <tbody>
-                                                                    <tr>
-                                                                        <th scope="row">Ownership Type</th>
-                                                                        <td><label for="" class="label label-info">{{$tenant->getProperty->getRentalOwner->ownership_type == 1 ? 'Individual' : 'Company/Trust'}}</label> </td>
-                                                                    </tr>
-                                                                    @if($tenant->getProperty->getRentalOwner->ownership_type == 1)
-                                                                        <tr>
-                                                                            <th scope="row">Full Name</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->title ?? ''}} {{$tenant->getProperty->getRentalOwner->first_name ?? ''}} {{$tenant->getProperty->getRentalOwner->surname ?? ''}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row">Gender</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->gender == 1 ? 'Male' : 'Female'}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row">Email</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->email ?? ''}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row">Mobile No.</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->mobile_no ?? ''}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row">Address</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->address ?? ''}}</td>
-                                                                        </tr>
 
-                                                                    @endif
-                                                                    @if($tenant->getProperty->getRentalOwner->ownership_type == 2)
                                                                         <tr>
                                                                             <th scope="row">Company Name</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->company_name ?? ''}}</td>
+                                                                            <td>{{$tenant->getProperty->getCompany->company_name ?? ''}}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row">Official Email</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->email ?? ''}}</td>
+                                                                            <td>{{$tenant->getProperty->getCompany->email ?? ''}}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row">Official Phone No.</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->mobile_no ?? ''}}</td>
+                                                                            <td>{{$tenant->getProperty->getCompany->mobile_no ?? ''}}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row">Office Address</th>
-                                                                            <td>{{$tenant->getProperty->getRentalOwner->address ?? ''}}</td>
+                                                                            <td>{{$tenant->getProperty->getCompany->address ?? ''}}</td>
                                                                         </tr>
-                                                                    @endif
+
 
                                                                     </tbody>
                                                                 </table>
@@ -271,21 +244,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row mt-5">
-                                                            <div class="col-lg-12 col-xs-12">
-                                                                <h4 class="sub-title">External View</h4>
-                                                                <div class="card-block">
-                                                                    <div class="owl-carousel carousel-dot owl-theme">
-                                                                        @foreach($tenant->getProperty->getExteriorGallery as $exterior)
-                                                                            <div class="item">
-                                                                                <img class="d-block img-fluid" src="\assets\images\property\exterior\{{$exterior->directory}}" alt="Exterior">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
                                                     </div>
                                                     <div class="col-lg-7 col-xs-12 product-detail" id="product-detail">
                                                         <div class="row">
@@ -294,7 +252,7 @@
                                                                     <h5 class="sub-title">  {{$tenant->getProperty->property_name ?? ''}}</h5>
                                                                 </div>
                                                                 <div class="col-lg-12 mb-2">
-                                                                    <span class=""><span class="label label-info">Property Type:</span> <a href="javascript:void(0);">
+                                                                    <span class=""><span class="">Property Type:</span> <a href="javascript:void(0);">
                                                                         @switch($tenant->getProperty->property_type)
                                                                                 @case(1)
                                                                                 Apartment
@@ -319,17 +277,17 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-lg-12 mb-2">
-                                                                    <span class="txt-muted"> <strong class="label label-info">Location: </strong> {{$tenant->getProperty->getLocation->location_name ?? ''}} <span
-                                                                            for="" class=" text-danger">></span> {{$tenant->getProperty->getArea->area_name ?? ''}} </span>
+                                                                    <span class="txt-muted"> <strong class="">Location: </strong> {{$tenant->getProperty->getLocation->location_name ?? ''}} <span
+                                                                            for="" class=" text-danger">|</span> {{$tenant->getProperty->getArea->area_name ?? ''}} </span>
                                                                 </div>
                                                                 <div class="col-lg-12 mb-2">
-                                                                    <span class=""><strong class="label label-info mb-2">Frequency: </strong>{{ $tenant->getProperty->getLeaseFrequency->frequency ?? '' }}</span>
+                                                                    <span class=""><strong class=" mb-2">Frequency: </strong>{{ $tenant->getProperty->getLeaseFrequency->frequency ?? '' }}</span>
                                                                 </div>
                                                                 <div class="col-lg-12 mb-2">
-                                                                    <span class=""><strong class="label label-info mb-2">Listing Type: </strong>{{ $tenant->getProperty->listing_type == 1 ? 'For rent' : 'For sale' }}</span>
+                                                                    <span class=""><strong class=" mb-2">Listing Type: </strong>{{ $tenant->getProperty->listing_type == 1 ? 'For rent' : 'For sale' }}</span>
                                                                 </div>
                                                                 <div class="col-lg-12 mb-2">
-                                                                    <span class=""><strong class="label label-info">Rental Price: </strong>{{'₦'.number_format($tenant->getProperty->rental_price,2) }}</span>
+                                                                    <span class=""><strong class="">Rental Price: </strong>{{'₦'.number_format($tenant->getProperty->rental_price,2) }}</span>
                                                                     <hr>
                                                                 </div>
                                                                 <div class="col-md-12 mb-2 col-lg-12">

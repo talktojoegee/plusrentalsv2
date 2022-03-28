@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Profile
+
 @endsection
 @section('current-page-brief')
 
@@ -21,7 +21,7 @@
         <div class="col-lg-12">
             <div class="cover-profile">
                 <div class="profile-bg-img">
-                    <img class="profile-bg-img img-fluid" src="\assets\images\user-profile\bg-img1.jpg" alt="bg-img">
+                    <img class="profile-bg-img img-fluid" style="height: 350px !important; " src="\assets\images\bg-img1.jpg" alt="bg-img">
                     <div class="card-block user-info">
                         <div class="col-md-12">
                             <div class="media-left">
@@ -33,7 +33,7 @@
                                 <div class="col-lg-12">
                                     <div class="user-title">
                                         <h2>{{$user->first_name ?? '' }} {{$user->surname ?? '' }}</h2>
-                                        <span class="text-white">{{$user->mobile_no ?? '' }}</span>
+                                        <span class="text-white">{{$user->position ?? '' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -85,10 +85,6 @@
                                                             <tr>
                                                                 <th scope="row">Full Name</th>
                                                                 <td>{{$user->first_name ?? '' }} {{$user->surname ?? '' }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">Gender</th>
-                                                                <td>{{$user->gender > 1 ? 'Male' : 'Female'  }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Member Since</th>

@@ -52,6 +52,13 @@ class Invoice extends Model
     public function getAllUntrashedInvoices(){
         return InV::where('trashed',0)->where('company_id', Auth::user()->company_id)->orderBy('id', 'DESC')->get();
     }
+    public function getInvoicesForTheMonth(){
+        return InV::where('trashed',0)
+            ->where('company_id', Auth::user()->company_id)
+            ->whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))
+            ->get();
+    }
 
     public function getLatestInvoiceNo(){
         return InV::where('company_id', Auth::user()->company_id)->orderBy('id', 'DESC')->first();
@@ -156,10 +163,11 @@ class Invoice extends Model
     }
 
     public function updateInvoiceStatus($invoice_id, $status){
+        //Every ledger[for accounting purpose] is suspended at the moment.
         if($status == 'post'){
-            $default_tenant_account = DefaultGLAccount::where('transaction', 'tenant_account')->first();
+            //$default_tenant_account = DefaultGLAccount::where('transaction', 'tenant_account')->first();
             $default_vat_account = DefaultGLAccount::where('transaction', 'tax_vat_account')->first();
-            if(!empty($default_tenant_account)){
+            //if(!empty($default_tenant_account)){
                 $invoice = InV::find($invoice_id);
                 $invoice->posted = 1;
                 $invoice->posted_by = Auth::user()->id;
@@ -167,7 +175,7 @@ class Invoice extends Model
                 $invoice->save();
                 #General ledger posting [this will occur during invoice posting
                 #GL posting [Tenant/Applicant]
-                $tenant_gl = new GeneralLedger();
+                /*$tenant_gl = new GeneralLedger();
                 $tenant_gl->glcode = $default_tenant_account->glcode;
                 $tenant_gl->posted_by = Auth::user()->id;
                 $tenant_gl->narration = "New invoice generated (Invoice No". $invoice->invoice_no .")";
@@ -179,7 +187,7 @@ class Invoice extends Model
                 $tenant_gl->property_id = $invoice->property_id;
                 $tenant_gl->created_at = $invoice->created_at;
                 $tenant_gl->company_id = Auth::user()->company_id;
-                $tenant_gl->save();
+                $tenant_gl->save();*/
                 /*#GL posting [VAT]
                 $vat_gl = new GeneralLedger();
                 $vat_gl->glcode = $default_vat_account->glcode;
@@ -195,7 +203,7 @@ class Invoice extends Model
                 $vat_gl->save();*/
 
                 #GL posting [Service]
-                foreach($invoice->getInvoiceItems as $item){
+                /*foreach($invoice->getInvoiceItems as $item){
                     $service_gl = new GeneralLedger();
                     $service_gl->glcode = $item->getService->glcode;
                     $service_gl->posted_by = Auth::user()->id;
@@ -209,11 +217,11 @@ class Invoice extends Model
                     $service_gl->created_at = $invoice->created_at;
                     $service_gl->company_id = Auth::user()->company_id;
                     $service_gl->save();
-                }
-                return 1; //success
-            }else{
+                }*/
+                //return 1; //success
+           /* }else{
                 return 0; //failed
-            }
+            }*/
         }else{
             $invoice = InV::find($invoice_id);
             $invoice->trashed = 1;

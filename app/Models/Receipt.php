@@ -27,6 +27,9 @@ class Receipt extends Model
     }
 
 
+    public function getCompany(){
+        return $this->belongsTo(Company::class, 'company_id');
+    }
 
     /*
      * Use-case methods
@@ -42,8 +45,8 @@ class Receipt extends Model
         return $receipt;
     }
 
-    public function getLastReceipt(){
-        return Receipt::where('company_id', Auth::user()->company_id)->orderBy('id', 'DESC')->first();
+    public function getLastReceipt($company_id){
+        return Receipt::where('company_id', $company_id)->orderBy('id', 'DESC')->first();
     }
 
     public function sendReceiptAsEmail($slug){
@@ -93,12 +96,12 @@ class Receipt extends Model
         $ref = substr(sha1(time()),30,40);
         if(!empty($receipt)){
             #Property
-                $property = Property::find($receipt->property_id);
+                //$property = Property::find($receipt->property_id);
             #Tenant
-                $tenant = Tenant::find($receipt->tenant_id);
-                $default_tenant_account = DefaultGLAccount::where('transaction', 'tenant_account')->where('company_id', Auth::user()->company_id)->first();
-                $default_bank_account = DefaultGLAccount::where('transaction', 'bank_account')->where('company_id', Auth::user()->company_id)->first();
-                if(!empty($default_tenant_account) || !empty($default_bank_account)){
+                //$tenant = Tenant::find($receipt->tenant_id);
+                //$default_tenant_account = DefaultGLAccount::where('transaction', 'tenant_account')->where('company_id', Auth::user()->company_id)->first();
+                //$default_bank_account = DefaultGLAccount::where('transaction', 'bank_account')->where('company_id', Auth::user()->company_id)->first();
+               /* if(!empty($default_tenant_account) || !empty($default_bank_account)){
                     #GL posting [Bank]
                     #Debit transaction
                     $debit = new GeneralLedger();
@@ -126,6 +129,7 @@ class Receipt extends Model
                     $credit->created_at = $receipt->created_at;
                     $credit->company_id = Auth::user()->company_id;
                     $credit->save();
+               */
                     #Update receipt details
                     $receipt->posted_by = Auth::user()->id;
                     $receipt->posted = 1; //yes
@@ -134,10 +138,10 @@ class Receipt extends Model
                     //\Mail::to($tenant)->send(new ReceiptMailer($receipt));
 
                     return 1; //success
-                }else{
+               /* }else{
                     return 0; //failed
                 }
-                return 1;//success
+                return 1;*///success
         }else{
             return 0; //failed
         }
@@ -201,16 +205,17 @@ class Receipt extends Model
 
     }
     public function generateOnlineReceipt($paymentDetails, $invoice){
-        $last_receipt = $this->getLastReceipt();
-        $default_tenant_account = DefaultGLAccount::where('transaction', 'tenant_account')->first();
+        $last_receipt = $this->getLastReceipt($invoice->company_id);
+        //$default_tenant_account = DefaultGLAccount::where('transaction', 'tenant_account')->first();
         $counter = null;
         if(!empty($last_receipt)){
             $counter = $last_receipt->receipt_no + 1;
         }else{
             $counter = 100000;
         }
-        $metadata = json_decode($paymentDetails['data'] ['metadata'][0], true);
-        $amount = $paymentDetails['data']['amount'];
+        //$metadata = json_decode($paymentDetails['data'] ['metadata'][0], true);
+        //$amount = $paymentDetails['data']['amount'];
+        $amount = $paymentDetails->data->amount;
         //$property_id = $metadata['property'];
         //$tenant_id = $metadata['tenant'];
 
@@ -224,7 +229,7 @@ class Receipt extends Model
             $tenant_existence = Tenant::where('tenant_app_id', $applicant->id)->first();
             if(empty($tenant_existence)){
                 #Tenant
-                $tenantId = $this->createNewTenant($applicant, $default_tenant_account, $invoice);
+                $tenantId = $this->createNewTenant($applicant,/* $default_tenant_account,*/ $invoice);
                 $this->updateInvoiceTenantId($invoice, $tenantId);
                 #Enlist for schedule
                 $this->createNewLeaseSchedule($tenantId, $invoice);
@@ -239,21 +244,21 @@ class Receipt extends Model
             #Enlist for schedule
             $this->createNewLeaseSchedule($invoice->tenant_id, $invoice);
             $this->updatePropertyStatusAsOccupied($invoice, $invoice->tenant_id);
-            $this->createNewReceipt($counter, $invoice, $amount);
+            $this->createNewReceipt($counter, $invoice);
         }
 
     }
 
-    public function createNewTenant(TenantApplicant $applicant, $default_tenant_account, $invoice){
+    public function createNewTenant(TenantApplicant $applicant/*, $default_tenant_account*/, $invoice){
         $tenant = new Tenant();
         $tenant->email = $applicant->email;
         $tenant->tenant_app_id = $applicant->id;
         $tenant->avatar = 'avatar.png';
-        $tenant->tenant_glcode = $default_tenant_account->glcode;
+        //$tenant->tenant_glcode = $default_tenant_account->glcode;
         $tenant->property_id = $invoice->property_id;
         $tenant->slug = substr(sha1(time()),33,40);
         $tenant->password = bcrypt('password123');
-        $tenant->company_id = Auth::user()->company_id;
+        $tenant->company_id = $invoice->company_id;
         $tenant->save();
         return $tenant->id;
     }
@@ -263,10 +268,10 @@ class Receipt extends Model
         $schedule->tenant_id = $tenantId;
         $schedule->property_id = $invoice->property_id;
         $schedule->trans_ref = $invoice->ref_no;
-        $schedule->scheduled_by = Auth::user()->id;
+        $schedule->scheduled_by = 1; //default - self Auth::user()->id;
         $schedule->status = 0; //pending
         $schedule->slug = substr(sha1(time()),32,40);
-        $schedule->company_id = Auth::user()->company_id;
+        $schedule->company_id = $invoice->company_id;
         $schedule->save();
     }
 
@@ -280,8 +285,8 @@ class Receipt extends Model
         $receipt->payment_method = 1; //cash
         $receipt->payment_date = now();
         $receipt->trans_ref = $this->generateTransactionRef();
-        $receipt->total = ($amount) ?? 0;
-        $receipt->sub_total = ($amount) ?? 0;
+        $receipt->total = ($amount)/100 ?? 0;
+        $receipt->sub_total = ($amount)/100 ?? 0;
         $receipt->receipt_type = $invoice->invoice_type ?? 1;
         $receipt->company_id = $invoice->company_id;
         $receipt->save();

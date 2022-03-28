@@ -111,7 +111,7 @@ class AdministrationController extends Controller
         return Permission::orderBy('name', 'ASC')->get();
     }
     public function manageRoles(){
-        return view('manager.administration.manage-roles', ['roles'=>$this->getRoles()]);
+        return view('superadmin.manage-roles', ['roles'=>$this->getRoles()]);
     }
 
     public function storeNewRole(Request $request){

@@ -46,12 +46,12 @@ class PropertyController extends Controller
 
     public function showAddNewPropertyForm()
     {
-        $accounts = $this->chartofaccount->getAllDetailChartOfAccounts();
+        //$accounts = $this->chartofaccount->getAllDetailChartOfAccounts();
         $rental_owners = RentalOwner::orderBy('first_name', 'ASC')->get();
         $locations = Location::orderBy('location_name')->get();
         $frequencies = $this->frequency->getAllActiveFrequencies();
         return view('manager.property.add-new-property',
-            ['accounts'=>$accounts,
+            [//'accounts'=>$accounts,
             'locations'=>$locations,
             'rental_owners'=>$rental_owners,
             'frequencies'=>$frequencies
@@ -65,18 +65,18 @@ class PropertyController extends Controller
             'property_name'=>'required',
             'location'=>'required',
             'area'=>'required',
-            'address'=>'required',
+            //'address'=>'required',
             'frequency'=>'required',
             'rental_price'=>'required',
             'listing_type'=>'required'
         ]);
             #Check pricing plan if it covers accounting, # of properties allowed per month or all time
-            $property_default_account = $this->defaultgl->getAccountByTransaction('property_account');
+            /*$property_default_account = $this->defaultgl->getAccountByTransaction('property_account');
             if(empty($property_default_account)){
                 session()->flash("error", "<strong>Ooops!</strong> There's no default property account. Visit <i>Accounting > Settings</i>");
                 return back();
-            }
-            $this->property->setNewProperty($request, $property_default_account);
+            }*/
+            $this->property->setNewProperty($request/*, $property_default_account service suspended*/);
             session()->flash("success", "<strong>Great!</strong> New property added successfully.");
             return back();
     }

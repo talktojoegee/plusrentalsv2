@@ -4,10 +4,10 @@
 @endsection
 
 @section('current-page')
-    Tenant Report
+
 @endsection
 @section('current-page-brief')
-    Generate tenant report
+
 @endsection
 
 @section('event-area')

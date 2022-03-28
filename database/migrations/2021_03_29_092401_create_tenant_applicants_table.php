@@ -31,6 +31,7 @@ class CreateTenantApplicantsTable extends Migration
             $table->string('leave_note')->nullable();
             $table->string('means_of_identification')->nullable();
             $table->string('attachment')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>{{$bill->getCompany->company_name.' - Invoice'}}</title>
+    <title>{{$invoice->getCompany->company_name.' - Invoice'}}</title>
 
     <style>
         .invoice-box {

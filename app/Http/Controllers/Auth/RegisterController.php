@@ -94,7 +94,8 @@ class RegisterController extends Controller
             'email'=>'required|email|unique:users,email',
             'first_name'=>'required',
             'password'=>'required|confirmed',
-            'terms'=>'required'
+            'terms'=>'required',
+            'g-recaptcha-response' => 'required|captcha',
         ],[
            'email.required'=>'Enter your email address',
            'email.email'=>'Enter a valid email address',
@@ -102,18 +103,20 @@ class RegisterController extends Controller
            'first_name.required'=>'Enter your first name',
            'password.required'=>'Choose a strong password',
            'password.confirmed'=>'Password mis-match. Chosen password is not same with re-type password.',
-            'terms.required'=>'Accept our terms & conditions to register.'
+            'terms.required'=>'Accept our terms & conditions to register.',
+            'g-recaptcha-response.captcha'=>'Incorrect captcha',
+            'g-recaptcha-response.required'=>'Are you a robot?',
         ]);
         $company = $this->company->setNewCompany();
         $this->user->setNewUser($request, $company->id);
-        $this->defaultcoa->setNewChartOfAccount($company->id);
+        //$this->defaultcoa->setNewChartOfAccount($company->id); /** This service is put on hold */
         $this->subscription->setNewSubscription($company->id, $company->plan_id, $company->active_subscription_key, $company->start_date, $company->end_date);
         try{
             \Mail::to($request)->send(new WelcomeMail($request));
         }catch (\Exception $exception){
 
        }
-        session()->flash("success", "<strong>Congratulations!</strong> Your account was created successfully. We also generated Chart of Accounts for you.");
+        session()->flash("success", "<strong>Good news!</strong> Your account was successfully created.");
         return redirect()->route('manager-login');
     }
 }
