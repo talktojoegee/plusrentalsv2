@@ -131,7 +131,7 @@
                                                         <label for="" class="label label-info">Vacant/Available</label>
                                                         @break
                                                         @case(1)
-                                                        <label for="" class="label label-success">Occupied/Leased</label>
+                                                        <label for="" class="label label-success">Leased/Taken</label>
                                                         @break
                                                         @case(2)
                                                         <label for="" class="label label-danger">Sold</label>

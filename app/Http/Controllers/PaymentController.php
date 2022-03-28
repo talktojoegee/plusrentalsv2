@@ -19,7 +19,9 @@ use App\Models\Tenant;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Paystack;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+use Yabacon\Paystack;
 
 class PaymentController extends Controller{
 
@@ -45,13 +47,28 @@ class PaymentController extends Controller{
     public function onlinePayment($slug){
         $invoice = $this->invoice->getInvoice($slug);
         if(!empty($invoice)){
-            $company_payment_int = $this->companypaymentintegration->getCompanyPaymentIntegration($invoice->company_id);
-            if(!empty($company_payment_int)){
+            $company = $this->company->getCompanyByCompanyId($invoice->company_id);
+            //$company_payment_int = $this->companypaymentintegration->getCompanyPaymentIntegration($invoice->company_id);
+            if(!empty($company)){
                 #Public key
-                $this->setEnv('PAYSTACK_PUBLIC_KEY', $company_payment_int->ps_public_key);
+                //$this->setEnv('PAYSTACK_PUBLIC_KEY', $company->public_key);
                 #Secret key
-                $this->setEnv('PAYSTACK_SECRET_KEY', $company_payment_int->ps_secret_key);
-                return view('manager.accounting.invoice.online-payment',['invoice'=>$invoice]);
+                //$this->setEnv('PAYSTACK_SECRET_KEY', $company->secret_key);
+                if(!empty($company->secret_key) && !empty($company->public_key)){
+                    //Cookie::queue("invoice",$invoice->id, 60 );
+                    //$response = new Response("Payment");
+                    //$response->withCookie("invoice", $invoice->id, 60);
+                    //setcookie('invoice', $invoice->id, 60);
+                    return view('manager.accounting.invoice.online-payment',
+                        ['invoice'=>$invoice,
+                            'company'=>$company
+                        ]
+                    );
+                }else{
+                    session()->flash("error", "Whoops! Kindly contact Admin. Something went wrong ");
+                    return back();
+                }
+
             }else{
                 session()->flash("error", "<h3 class='text-center'>Whoops! Kindly contact Admin. Something went wrong.</h3> ");
                 return back();
@@ -120,35 +137,120 @@ class PaymentController extends Controller{
      * Redirect the User to Paystack Payment Page
      * @return Url
      */
-    public function redirectToGateway()
+    public function redirectToGateway(Request $request)
     {
-        try{
-            return Paystack::getAuthorizationUrl()->redirectNow();
-        }catch(\Exception $e) {
-            session()->flash("error", "<strong>Ooops!</strong> Token expired. Refresh the page and try again.");
+        //$value = $request->cookie("invoice");
+        //$_COOKIE['invoice']
+        //$value = Cookie::get('invoice');
+        //return dd($value);
+        //return dd($request->all());
+        //the subject of allowing part payment is something that needs to be discussed.
+        $this->validate($request,[
+            'amount'=>'required',
+            'invoice'=>'required',
+            'email'=>'required'
+        ],[
+            'amount.required'=>"Enter the amount.",
+            'email.required'=>"Enter email address",
+        ]);
+        $invoice = $this->invoice->getInvoiceById($request->invoice);
+        if(!empty($invoice)){
+            $company = $this->company->getCompanyByCompanyId($invoice->company_id);
+            if(!empty($company)){
+                if(!empty($company->secret_key) && !empty($company->public_key)){
+                    //return dd($company->secret_key);
+                    try{
+                        $paystack = new Paystack($company->secret_key);
+                        $builder = new Paystack\MetadataBuilder();
+                        $builder->withInvoice($request->invoice);
+                        $builder->withTransaction('invoice');
+                        $metadata = $builder->build();
+                        $tranx = $paystack->transaction->initialize([
+                            'amount'=>$request->amount,       // in kobo
+                            'email'=>$request->email,         // unique to customers
+                            'reference'=>substr(sha1(time()),23,40), // unique to transactions
+                            'metadata'=>$metadata
+                        ]);
+
+                        Cookie::queue("invoice",$invoice->id, 60 );
+                        return redirect()->to($tranx->data->authorization_url)->send();
+                        //return Paystack::getAuthorizationUrl()->redirectNow();
+                    }catch (Paystack\Exception\ApiException $exception){
+                        session()->flash("error", "Whoops! Something went wrong. Try again.");
+                        return back();
+                    }
+                }else{
+                    session()->flash("error", "We cannot process online payment at the moment. Try again later.");
+                    return back();
+                }
+
+            }else{
+                session()->flash("error", "No record found.");
+                return back();
+            }
+
+        }else{
+            session()->flash("error", "No record found.");
             return back();
         }
+
     }
 
     /**
      * Obtain Paystack payment information
      * @return void
      */
-    public function handleGatewayCallback()
+    public function handleGatewayCallback(Request $request)
     {
-        $paymentDetails = Paystack::getPaymentData();
-        $metadata = json_decode($paymentDetails['data'] ['metadata'][0], true);
-        $amount = $paymentDetails['data']['amount'];
+        $reference = isset($request->reference) ? $request->reference : '';
+        if(!$reference){
+            die('No reference supplied');
+        }
+
+        //$cookie = $request->cookie("invoice");
+        $invoiceIdCookie = Cookie::get("invoice");
+        //return dd($cookie);
+        $invoice = $this->invoice->getInvoiceById($invoiceIdCookie);
+        if(empty($invoice)){
+            return "<h3>Something went wrong. Try again later.</h3>";
+        }
+        $companyDetail = $this->company->getCompanyByCompanyId($invoice->company_id);
+        if(empty($companyDetail)){
+            return "<h3>Something went wrong. Try again later.</h3>";
+        }
+       // return dd($companyDetail);
+        $paystack = new Paystack($companyDetail->secret_key);
+        try {
+            // verify using the library
+            $tranx = $paystack->transaction->verify([
+                'reference'=>$reference, // unique to transactions
+            ]);
+        }catch (Paystack\Exception\ApiException $exception){
+            return "<h3>Something went wrong. Try again later.</h3>";
+        }
+        //return dd($tranx->data->amount);
+        if ('success' === $tranx->data->status) {
+            try{
+                $transaction_type = $tranx->data->metadata->transaction ;
+
+            }catch(Paystack\Exception\ApiException $ex){
+
+            }
+        }
+        //$paymentDetails = Paystack::getPaymentData();
+        //return dd($paymentDetails);
+        //$metadata = json_decode($paymentDetails['data'] ['metadata'][0], true);
+        $amount = $tranx->data->amount;
         $current = Carbon::now();
         $key = "key_".substr(sha1(time()),21,40 );
-        $transaction_type = $metadata['transaction_type'];
+        //$transaction_type = $metadata['transaction_type'];
         #Sort out transaction type
         if($transaction_type == 'invoice'){
-            $invoice_id = $metadata['invoice_id'];
-            $invoice = $this->invoice->getInvoiceById($invoice_id);
-            if(!empty($invoice)){
+            $invoice_id = $invoiceIdCookie;
+            //$invoice = $this->invoice->getInvoiceById($invoice_id);
+            //if(!empty($invoice)){
                 $this->invoice->updateInvoicePayment($invoice, $amount/100);
-                $this->receipt->generateOnlineReceipt($paymentDetails, $invoice);
+                $this->receipt->generateOnlineReceipt($tranx, $invoice);
                 if($invoice->invoice_type == 2){ //lease renewal
                     $propertyObj = Property::find($invoice->property_id);
                     $frequencyObj = $this->leasefrequency->getLeaseFrequencyById($propertyObj->frequency);
@@ -162,13 +264,14 @@ class PaymentController extends Controller{
                     $this->tenant->updateTenantLease($invoice->tenant_id, $invoice->property_id, $key, now(), $end_date->toDateTimeString() );
                     #Register in lease renewal table
                     $this->leaserenewal->renewTenantLease($invoice->tenant_id, $invoice->company_id, $invoice->property_id, $key, now(), $end_date->toDateTimeString() );
+                    $this->receipt->generateOnlineReceipt($tranx, $invoice);
                 }
                 session()->flash("success", "<strong>Great!</strong> Payment processed successfully.");
                 return back();
-            }else{
+            /*}else{
                 session()->flash("error", "<strong>Whoops! No record found.");
                 return back();
-            }
+            }*/
         }
         if($transaction_type == 'subscription'){
             $user = $this->user->getUserById($metadata['user']);

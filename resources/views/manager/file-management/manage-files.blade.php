@@ -4,10 +4,10 @@
 @endsection
 
 @section('current-page')
-    Manage Files
+
 @endsection
 @section('current-page-brief')
-    Manage Files
+
 @endsection
 
 @section('event-area')

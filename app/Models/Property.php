@@ -157,7 +157,7 @@ class Property extends Model
         return Property::where('location_id', $location_id)->where('status', 0)->take(10)->get();
     }
 
-    public function setNewProperty(Request $request, $property_default_account){
+    public function setNewProperty(Request $request/*, $property_default_account service suspended*/){
         #Property
         $property = new Property;
         $property->property_type = $request->property_type;
@@ -173,7 +173,7 @@ class Property extends Model
         $property->security_deposit = $request->security_deposit ?? 0;
         $property->late_fee = $request->late_fee ?? 0;
         $property->frequency = $request->frequency ?? 0;
-        $property->property_account = $request->default_account == 2 ? $request->property_account :  $property_default_account->glcode;
+        $property->property_account = 1; //$request->default_account == 2 ? $request->property_account :  $property_default_account->glcode;
         $property->added_by = Auth::user()->id;
         $property->rental_owner_id = Auth::user()->company_id;
         $property->slug = Str::slug($request->property_name).'-'.substr(sha1(time()),32,40);

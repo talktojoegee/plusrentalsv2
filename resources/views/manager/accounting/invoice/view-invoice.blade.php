@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Invoice No: {{$invoice->invoice_no ?? ''}}
+
 @endsection
 @section('current-page-brief')
 
@@ -144,7 +144,7 @@
                             <table>
                                 <tr>
                                     <td class="title">
-                                        <img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" />
+                                        <img src="/assets/drive/{{$invoice->getCompany->logo ?? 'logo.png'}}" style="width: 64px; max-width: 300px" />
                                     </td>
 
                                     <td>
@@ -307,7 +307,7 @@
                                             @elseif($invoice->trashed == 1)
                                             <label for="" class="label label-danger">Declined</label>
                                             @elseif($invoice->posted == 1)
-                                            <label for="" class="label label-success">Posted</label>
+                                            <label for="" class="label label-success">Approved</label>
                                         @endif
                                     </a>
                                 </td>

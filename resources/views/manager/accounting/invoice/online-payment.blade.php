@@ -109,7 +109,7 @@
 @section('main-content')
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            
+
             @if($invoice->total == $invoice->paid_amount)
                 <div class="alert alert-success background-success">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -136,7 +136,7 @@
             @endif
         </div>
     </div>
-    <form action="{{route('make-payment')}}" method="post">
+    <form action="{{route('make-online-payment')}}" method="post">
         @csrf
         <div class="row" >
             <div class="col-lg-12 col-xl-12">
@@ -147,7 +147,7 @@
                                 <table>
                                     <tr>
                                         <td class="title">
-                                            <img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" />
+                                            <img src="/assets/drive/{{$company->logo ?? 'logo.png'}}" style="width: 64px; max-width: 300px" />
                                         </td>
 
                                         <td>
@@ -166,9 +166,8 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            Connexxion Group<br />
-                                            12345 Sunny Road<br />
-                                            2A Iller Crescent Maitama, Abuja.
+                                            {{$company->company_name ?? '' }}<br />
+                                            {{$company->address_1 ?? '' }}
                                         </td>
 
                                         <td>
@@ -261,9 +260,7 @@
                     {{$invoice->getApplicant->email ?? ''}}
                     @endif">
                     <input type="hidden" name="amount" value="{{ (($invoice->total - $invoice->paid_amount) * 100) ?? 0}}">
-                    <input type="hidden" name="currency" value="NGN">
-                    <input type="hidden" name="metadata[]" value="{{ json_encode($array = ['invoice_id' => $invoice->id, 'method'=>'online', 'transaction_type'=>'invoice']) }}" >
-                    <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
+                    <input type="hidden" name="invoice" value="{{ $invoice->id}}">
                 </div>
             </div>
             @if($invoice->total > $invoice->paid_amount)
@@ -271,7 +268,7 @@
                     <div class="card mt-3">
                         <div class="card-block">
                             <div class="btn-group">
-                                <a href="{{url()->previous()}}" class="btn btn-sm btn-secondary"><i class="ti-close mr-2"></i> Cancel</a>
+                                <a href="{{route('property-listing')}}" class="btn btn-sm btn-secondary"><i class="ti-close mr-2"></i> Cancel</a>
                                 <button class="btn btn-sm btn-primary" type="submit"><i class="icofont icofont-wallet mr-2"></i> Pay {{'₦'.number_format($invoice->total - $invoice->paid_amount,2)}}</button>
                             </div>
                         </div>

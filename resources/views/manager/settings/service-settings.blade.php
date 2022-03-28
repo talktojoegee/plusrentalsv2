@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Service Settings
+
 @endsection
 @section('current-page-brief')
 
@@ -55,54 +55,6 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="">GL Code</label>
-                                    <select name="glcode" id="glcode" class="form-control js-example-basic-single">
-                                        <option selected disabled>--Select Glcode Account--</option>
-                                        <optgroup label="Assets">
-                                            @foreach($accounts as $account)
-                                                @if($account->account_type == 1)
-                                                    <option value="{{$account->glcode}}">{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                @endif
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Liability">
-                                            @foreach($accounts as $account)
-                                                @if($account->account_type == 2)
-                                                    <option value="{{$account->glcode}}">{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                @endif
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Equity">
-                                            @foreach($accounts as $account)
-                                                @if($account->account_type == 3)
-                                                    <option value="{{$account->glcode}}">{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                @endif
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Revenue">
-                                            @foreach($accounts as $account)
-                                                @if($account->account_type == 4)
-                                                    <option value="{{$account->glcode}}">{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                @endif
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Expenses">
-                                            @foreach($accounts as $account)
-                                                @if($account->account_type == 5)
-                                                    <option value="{{$account->glcode}}">{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                @endif
-                                            @endforeach
-                                        </optgroup>
-                                    </select>
-                                    @error('glcode')
-                                        <i class="text-danger">{{$message}}</i>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
                                     <label for="">Charge Type</label>
                                     <select name="charge_type" id="charge_type" class="form-control">
                                         <option selected disabled>--Select Charge Type--</option>
@@ -131,7 +83,7 @@
                             <div class="col-md-12 d-flex justify-content-center">
                                 <div class="btn-group">
                                     <a href="{{url()->previous()}}" class="btn btn-secondary btn-mini">Cancel</a>
-                                    <button class="btn btn-primary btn-mini">Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-mini">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +105,6 @@
                                         <th class="sorting_asc">Service Name</th>
                                         <th class="sorting" >Charge Type</th>
                                         <th class="sorting"  >Charge Value</th>
-                                        <th class="sorting"  >GL Account</th>
                                         <th class="sorting"  >Action</th>
                                     </tr>
                                     </thead>
@@ -176,9 +127,6 @@
                                                 {{number_format($service->charge_value ?? 0,2)}} {{$service->charge_type == 2 ? '%' : ''}}
                                             </td>
                                             <td>
-                                                {{$service->getServiceGl->glcode ?? ''}} - {{$service->getServiceGl->account_name ?? ''}}
-                                            </td>
-                                            <td>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editServiceModal_{{$service->id}}" class="btn btn-primary btn-mini">View</a>
                                                 <div class="modal fade" id="editServiceModal_{{$service->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -199,54 +147,6 @@
                                                                                 <input type="text" name="edit_service_name" value="{{$service->service_name ?? ''}}" id="edit_service_name" class="form-control">
                                                                                 @error('edit_service_name')
                                                                                     <i class="text-danger">{{$message}}</i>
-                                                                                @enderror
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-8">
-                                                                            <div class="form-group">
-                                                                                <label for="">GL Code</label>
-                                                                                <select name="edit_glcode" id="edit_glcode" class="form-control js-example-basic-single">
-
-                                                                                    <optgroup label="Assets">
-                                                                                        @foreach($accounts as $account)
-                                                                                            @if($account->account_type == 1)
-                                                                                                <option value="{{$account->glcode}}" {{$service->glcode == $account->glcode ? 'selected' : ''}}>{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </optgroup>
-                                                                                    <optgroup label="Liability">
-                                                                                        @foreach($accounts as $account)
-                                                                                            @if($account->account_type == 2)
-                                                                                                <option value="{{$account->glcode}}" {{$service->glcode == $account->glcode ? 'selected' : ''}}>{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </optgroup>
-                                                                                    <optgroup label="Equity">
-                                                                                        @foreach($accounts as $account)
-                                                                                            @if($account->account_type == 3)
-                                                                                                <option value="{{$account->glcode}}" {{$service->glcode == $account->glcode ? 'selected' : ''}}>{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </optgroup>
-                                                                                    <optgroup label="Revenue">
-                                                                                        @foreach($accounts as $account)
-                                                                                            @if($account->account_type == 4)
-                                                                                                <option value="{{$account->glcode}}" {{$service->glcode == $account->glcode ? 'selected' : ''}}>{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </optgroup>
-                                                                                    <optgroup label="Expenses">
-                                                                                        @foreach($accounts as $account)
-                                                                                            @if($account->account_type == 5)
-                                                                                                <option value="{{$account->glcode}}" {{$service->glcode == $account->glcode ? 'selected' : ''}}>{{$account->glcode ?? ''}} - {{$account->account_name ?? ''}}</option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </optgroup>
-                                                                                </select>
-                                                                                @error('edit_glcode')
-                                                                                <i class="text-danger">{{$message}}</i>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -302,7 +202,6 @@
                                         <th >Service Name</th>
                                         <th >Charge Type</th>
                                         <th >Charge Value</th>
-                                        <th >GL Code</th>
                                         <th >Action</th>
                                     </tr>
                                     </tfoot>

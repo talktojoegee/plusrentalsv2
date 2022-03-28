@@ -18,11 +18,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Property Listing Detail</h2>
+                        <h2>Property Detail</h2>
                         <nav id="breadcrumbs">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li>Property Listing Detail</li>
+                                <li><a href="{{route('home')}}">Home</a></li>
+                                <li>Property Detail</li>
                             </ul>
                         </nav>
                     </div>
@@ -61,14 +61,22 @@
                         <a class="close"></a>
                     </div>
                 @endif
+                @if ($errors->any())
+                        <div class="notification warning closeable">
+                    @foreach ($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            <a class="close"></a>
+                    @endforeach
+                        </div>
+                    @endif
                 <div id="titlebar-dtl-item" class="property-titlebar margin-bottom-0">
                     <div class="property-title">
                         <div class="property-pricing">{{'₦'.number_format($property->rental_price,2)}}/{{$property->getLeaseFrequency->frequency ?? ''}}</div>
                         <h2>{{ucfirst(strtolower($property->property_name))}} <span class="property-badge-sale">
                                 @if($property->listing_type == 1)
-                                    For Sale
-                                @else
                                     For Rent
+                                @else
+                                    For Sale
                                 @endif
                             </span></h2>
                         <span class="utf-listing-address"><i class="icon-material-outline-location-on"></i> {{$property->getLocation->location_name ?? ''}}, {{$property->getArea->area_name ?? ''}}</span>
@@ -116,9 +124,9 @@
                                 @endswitch
                             </span></li>
                         <li>Listing Type: <span>@if($property->listing_type == 1)
-                                    For Sale
-                                @else
                                     For Rent
+                                @else
+                                    For Sale
                                 @endif</span></li>
                     </ul>
                     <!-- Features -->
@@ -127,67 +135,67 @@
                     </div>
                     <ul class="property-features margin-top-0">
                         <li>
-                            {!!  $property->getPropertyFeatures->bedrooms == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->bedrooms == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Bedrooms:  {{$property->getPropertyFeatures->bedrooms_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->bathrooms == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->bathrooms == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Bathrooms:{{$property->getPropertyFeatures->bathrooms_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->study_room == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->study_room == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Study room:  {{$property->getPropertyFeatures->study_room_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->dinning_room == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->dinning_room == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Dinning room:  {{$property->getPropertyFeatures->dinning_room_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->carports == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->carports == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Carports:  {{$property->getPropertyFeatures->carports_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->kitchens == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->kitchens == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Kitchens:  {{$property->getPropertyFeatures->kitchens_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->garages == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->garages == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Garages:  {{$property->getPropertyFeatures->garages_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->flooring == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->flooring == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Flooring:  {{$property->getPropertyFeatures->flooring_type ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->laundry == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->laundry == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Laundry:  {{$property->getPropertyFeatures->laundry_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->balcony == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->balcony == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Balcony: {{$property->getPropertyFeatures->balcony_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->pool == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->pool == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Pool: {{$property->getPropertyFeatures->pool_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->garden == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->garden == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Garden: {{$property->getPropertyFeatures->garden_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->views == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->views == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Views: {{$property->getPropertyFeatures->views_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->security == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->security == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Security: {{$property->getPropertyFeatures->security_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->store_room == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->store_room == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Store room: {{$property->getPropertyFeatures->store_room_comment ?? '-'}}
                         </li>
                         <li>
-                            {!!  $property->getPropertyFeatures->lounges == 1 ? "<i class='icon-material-outline-check-circle' style='color: #e33324'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
+                            {!!  $property->getPropertyFeatures->lounges == 1 ? "<i class='icon-material-outline-check-circle' style='color: green'></i>" : "<i class='sl sl-icon-close text-danger'></i>" !!}
                             Lounges: {{$property->getPropertyFeatures->lounges_comment ?? '-'}}
                         </li>
                     </ul>
@@ -234,7 +242,7 @@
                         <div class="row mb-3">
                             <div class="col-md-12 col-sm-12 col-lg-12 add-comment">
                                 <label for="">Message</label>
-                                <input type="text" name="message" placeholder="I'm interested in {{$property->property_name ?? '...'}}" class="form-control" value="{{old('message')}}">
+                                <textarea style="resize: none;" name="message" placeholder="I'm interested in {{$property->property_name ?? '...'}}" class="form-control">{{old('message')}}</textarea>
                                 @error('message')
                                 <i class="text-danger mt-2">{{$message}}</i>
                                 @enderror
@@ -291,7 +299,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-5">
-                <a  href="#utf-signin-dialog-block"  class="popup-with-zoom-anim log-in-button sign-in button"><i class="icon-feather-send"></i> Submit Lease Application</a>
+                <a  href="#utf-signin-dialog-block"  class="popup-with-zoom-anim log-in-button sign-in button"><i class="icon-feather-send"></i> {{$property->listing_type == 1 ? "Submit Lease Application" : "Submit Buyer Request"}} </a>
                 <div class="sidebar">
                     <div class="widget utf-sidebar-widget-item">
                         <div class="utf-detail-banner-add-section">

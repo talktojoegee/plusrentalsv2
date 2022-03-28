@@ -22,7 +22,7 @@
                         <ul class="pcoded-submenu">
                             <li class="">
                                 <a href="{{route('properties')}}">
-                                    <span class="pcoded-mtext">Manage Properties</span>
+                                    <span class="pcoded-mtext">All Properties</span>
                                 </a>
                             </li>
                             <li class=" ">
@@ -43,15 +43,19 @@
                             <span class="pcoded-mtext">Lease</span>
                         </a>
                         <ul class="pcoded-submenu">
-
                             <li class="">
-                                <a href="{{route('lease-applications')}}">
-                                    <span class="pcoded-mtext">Manage Lease App.</span>
+                                <a href="{{route('leases')}}">
+                                    <span class="pcoded-mtext">Manage Lease</span>
                                 </a>
                             </li>
                             <li class="">
                                 <a href="{{route('add-new-lease')}}">
                                     <span class="pcoded-mtext">Add New Lease</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{route('lease-applications')}}">
+                                    <span class="pcoded-mtext">Lease Applications</span>
                                 </a>
                             </li>
                             <li class=" ">
@@ -62,14 +66,25 @@
 
                         </ul>
                     </li>
-                    <li class="">
-                        <a href="{{route('manage-tenants')}}">
-                                <span class="pcoded-micon">
-                                    <i class="ti-layout-grid2-alt"></i>
-                            </span>
-                            <span class="pcoded-mtext">Manage Tenants</span>
-                            <span class="pcoded-mcaret"></span>
+                    <li class="pcoded-hasmenu">
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="icofont icofont-people"></i></span>
+                            <span class="pcoded-mtext">Tenant</span>
                         </a>
+                        <ul class="pcoded-submenu">
+
+                            <li class="">
+                                <a href="{{route('manage-tenants')}}">
+                                    <span class="pcoded-mtext">All Tenants</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{route('add-new-tenant')}}">
+                                    <span class="pcoded-mtext">Add New Tenant</span>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
                 </ul>
             </li>
@@ -121,104 +136,55 @@
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="icofont icofont-money-bag"></i></span>
-                    <span class="pcoded-mtext">Accounting</span>
+                    <span class="pcoded-mtext">Payment</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
                 <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="#">
+                            <span class="pcoded-mtext"> Receive Payment</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="{{route('manage-invoices')}}">
+                            <span class="pcoded-mtext"> Invoice</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="{{route('manage-receipts')}}">
+                            <span class="pcoded-mtext"> Receipt</span>
+                        </a>
+                    </li>
                     <li class="pcoded-hasmenu">
-                        <a href="javascript:void(0)" data-i18n="nav.form-components.main">
-                            <span class="pcoded-micon"><i class="ti-layers"></i></span>
+                        <a href="javascript:void(0)">
+                            <span class="pcoded-micon"><i class="icofont icofont-home-search"></i></span>
                             <span class="pcoded-mtext">Reports</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
-                            <ul class="pcoded-submenu">
-                            <li class=" ">
-                                <a href="{{route('chart-of-accounts')}}">
-                                    <span class="pcoded-mtext">Chart of Accounts</span>
+                        <ul class="pcoded-submenu">
+                            <li class="">
+                                <a href="{{route('tenant-report')}}">
+                                    <span class="pcoded-mtext">Tenant</span>
                                 </a>
                             </li>
-                            <li class=" ">
-                                <a href="{{route('trial-balance')}}">
-                                    <span class="pcoded-mtext">Trial Balance</span>
+                            <li class="">
+                                <a href="{{route('property-report')}}">
+                                    <span class="pcoded-mtext">Property</span>
                                 </a>
                             </li>
-                            <li class=" ">
-                                <a href="{{route('balance-sheet')}}">
-                                    <span class="pcoded-mtext">Balance Sheet</span>
-                                </a>
-                            </li>
-                            <li class=" ">
-                                <a href="{{route('profit-or-loss')}}">
-                                    <span class="pcoded-mtext">Profit/Loss</span>
-                                </a>
-                            </li>
-                            <li class=" ">
-                                <a href="{{route('journal-voucher')}}">
-                                    <span class="pcoded-mtext">Journal Voucher</span>
-                                </a>
-                            </li>
+
                         </ul>
-
-                        <li class="pcoded-hasmenu">
-                            <a href="javascript:void(0)">
-                                <span class="pcoded-micon"><i class="icofont icofont-barcode"></i></span>
-                                <span class="pcoded-mtext">Tenants</span>
-                            </a>
-                            <ul class="pcoded-submenu">
-                                <li class="">
-                                    <a href="{{ route('manage-invoices') }}">
-                                        <span class="pcoded-mtext">Invoices</span>
-                                    </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{route('manage-receipts')}}">
-                                        <span class="pcoded-mtext">Receipts</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="pcoded-hasmenu">
-                            <a href="javascript:void(0)">
-                                <span class="pcoded-micon"><i class="icofont icofont-people"></i></span>
-                                <span class="pcoded-mtext">Vendors</span>
-                            </a>
-                            <ul class="pcoded-submenu">
-                                <li class="">
-                                    <a href="widget-statistic.htm">
-                                        <span class="pcoded-mtext">Manage Vendors</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="{{route('add-new-vendor')}}">
-                                        <span class="pcoded-mtext">Add New Vendor</span>
-                                    </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{route('manage-bills')}}">
-                                        <span class="pcoded-mtext">Bills</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="{{route('manage-payments')}}">
-                                        <span class="pcoded-mtext">Payments</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="{{route('vendors-categories')}}">
-                                        <span class="pcoded-mtext">Manage Categories</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class=" ">
-                            <a href="{{route('account-settings')}}">
-                                <span class="pcoded-mtext"> Settings</span>
-                            </a>
-                        </li>
-
+                    </li>
+                    <li class=" ">
+                        <a href="{{route('service-settings')}}">
+                            <span class="pcoded-mtext">  Service</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="{{route('account-settings')}}">
+                            <span class="pcoded-mtext"> Settings</span>
+                        </a>
+                    </li>
 
                 </ul>
             </li>
@@ -230,18 +196,23 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li class="">
+                        <a href="{{route('account-settings')}}">
+                            <span class="pcoded-mtext">Payment</span>
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="{{route('general-settings')}}">
-                            <span class="pcoded-mtext">General Settings</span>
+                            <span class="pcoded-mtext">General</span>
                         </a>
                     </li>
                     <li class="">
                         <a href="{{route('service-settings')}}">
-                            <span class="pcoded-mtext">Service Settings</span>
+                            <span class="pcoded-mtext">Services</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{route('account-settings')}}">
-                            <span class="pcoded-mtext">Accounting Settings</span>
+                        <a href="{{route('general-settings')}}">
+                            <span class="pcoded-mtext">Bulk SMS</span>
                         </a>
                     </li>
 

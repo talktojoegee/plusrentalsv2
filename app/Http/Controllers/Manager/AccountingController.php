@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChartOfAccount;
+use App\Models\Company;
 use App\Models\CompanyPaymentIntegration;
 use App\Models\DefaultGLAccount;
 use App\Models\GeneralLedger;
@@ -39,6 +40,7 @@ class AccountingController extends Controller
        $this->superadminpaymentintegration = new SuperAdminPaymentIntegration();
        $this->defaulaccount = new DefaultGLAccount();
        $this->journalvoucher = new JournalVoucher();
+       $this->company = new Company();
        /*$this->leasefrequency = new LeaseFrequency();
        $this->leaserenewal = new LeaseRenewal();*/
    }
@@ -139,7 +141,7 @@ return "Done";*/
            'public_key.required'=>'Enter your live public key',
            'secret_key.required'=>'Enter your live secret key'
        ]);
-       $this->companypaymentintegration->setNewCompanyPaymentIntegration($request);
+       $this->company->updateTenantPaymentIntegration($request);
        session()->flash("success", "<strong>Congratulations!</strong> Your changes were saved successfully.");
        return back();
    }
@@ -237,7 +239,12 @@ return "Done";*/
     * Invoice
     */
     public function manageInvoices(){
-        return view('manager.accounting.invoice.index', ['invoices'=>$this->invoice->getAllUntrashedInvoices()]);
+        return view('manager.accounting.invoice.index',
+            [
+                'invoices'=>$this->invoice->getAllUntrashedInvoices(),
+                'thisMonth'=>$this->invoice->getInvoicesForTheMonth()
+            ]
+        );
     }
 
     public function showGenerateNewInvoiceForm(){
@@ -387,13 +394,13 @@ return "Done";*/
         $invoice = $this->invoice->getInvoice($slug);
         if(!empty($invoice)){
             $status = $this->invoice->updateInvoiceStatus($invoice->id, 'post');
-            if($status == 0){
+            /*if($status == 0){
                 session()->flash("error", "<strong>Whoops!</strong> Kindly setup default accounts for transactions like this.");
                 return back();
-            }else{
-                session()->flash("success", "<strong>Success!</strong> Invoice posted.");
+            }else{*/
+                session()->flash("success", "<strong>Success!</strong> Invoice approved.");
                 return back();
-            }
+            //}
         }else{
             session()->flash("error", "<strong>Whoops!</strong> No record found.");
             return back();
@@ -408,6 +415,7 @@ return "Done";*/
                 $applicant = $this->tenant_app->getApplicantById($invoice->tenant_app_id);
                 if(!empty($applicant)){
                     $this->invoice->sendInvoiceAsEmailService($invoice, $applicant);
+                    //return dd($applicant);
                     session()->flash("success", "<strong>Success!</strong> Invoice sent.");
                     return back();
                 }else{
@@ -419,6 +427,7 @@ return "Done";*/
                 if(!empty($tenant)){
                     $tenant_app = $this->tenant_app->getApplicantById($tenant->tenant_app_id);
                     $this->invoice->sendInvoiceAsEmailService($invoice, $tenant_app);
+
                     session()->flash("success", "<strong>Success!</strong> Invoice sent.");
                     return back();
                 }else{

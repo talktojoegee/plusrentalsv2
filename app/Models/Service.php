@@ -29,7 +29,7 @@ class Service extends Model
         $service->service_name = $request->service_name ?? '';
         $service->charge_type = $request->charge_type ?? 1;
         $service->charge_value = $request->charge_value ?? 0;
-        $service->glcode = $request->glcode ?? 0;
+        //$service->glcode = $request->glcode ?? 0;
         $service->company_id = Auth::user()->company_id;
         $service->save();
     }
@@ -39,7 +39,7 @@ class Service extends Model
         $service->service_name = $request->edit_service_name ?? '';
         $service->charge_type = $request->edit_charge_type ?? 1;
         $service->charge_value = $request->edit_charge_value ?? 0;
-        $service->glcode = $request->edit_glcode ?? 0;
+        //$service->glcode = $request->edit_glcode ?? 0;
         $service->save();
     }
 }

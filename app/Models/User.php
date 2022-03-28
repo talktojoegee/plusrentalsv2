@@ -82,7 +82,7 @@ class User extends Authenticatable
     }
 
     public function getUserTheme(){
-        return $this->belongsTo(Theme::class, 'active_theme');
+        return $this->belongsTo(Theme::class, 'active_theme', 'id');
     }
 
 
@@ -106,7 +106,7 @@ class User extends Authenticatable
         $user = new User();
         $user->first_name = $request->first_name ?? '';
         //$user->surname = $request->surname ?? '';
-        $user->password = bcrypt($request->password);
+        $user->password = "password123"; //bcrypt($request->password);
         $user->email = $request->email ?? '';
         //$user->address = $request->address ?? '';
         //$user->mobile_no = $request->mobile_no ?? '';

@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    All Invoices
+
 @endsection
 @section('current-page-brief')
 
@@ -21,7 +21,7 @@
         <div class="col-sm-4">
             <div class="card bg-c-pink text-white widget-visitor-card">
                 <div class="card-block-small text-center">
-                    <h2>{{'₦'.number_format($invoices->where('posted',2)->sum('total'))}}</h2>
+                    <h2>{{'₦'.number_format($thisMonth->where('status',3)->sum('total'))}}</h2>
                     <h6>Declined</h6>
                     <i class="icofont icofont-ban"></i>
                 </div>
@@ -30,7 +30,7 @@
         <div class="col-sm-4">
             <div class="card bg-c-blue text-white widget-visitor-card">
                 <div class="card-block-small text-center">
-                    <h2>{{'₦'.number_format($invoices->where('posted',1)->sum('paid_amount'))}}</h2>
+                    <h2>{{'₦'.number_format($thisMonth->where('status',1)->sum('paid_amount'))}}</h2>
                     <h6>Payment Received</h6>
                     <i class="icofont icofont-ui-check"></i>
                 </div>
@@ -39,7 +39,7 @@
         <div class="col-sm-4">
             <div class="card bg-c-yellow text-white widget-visitor-card">
                 <div class="card-block-small text-center">
-                    <h2>{{'₦'.number_format(($invoices->where('posted',1)->sum('total')) - ($invoices->where('posted',1)->sum('paid_amount')))}}</h2>
+                    <h2>{{'₦'.number_format(($thisMonth->where('status',0)->sum('total')) )}}</h2>
                     <h6>Pending</h6>
                     <i class="icofont icofont-spinner-alt-3"></i>
                 </div>

@@ -4,10 +4,10 @@
 @endsection
 
 @section('current-page')
-    Property Report
+
 @endsection
 @section('current-page-brief')
-    A collection of all properties.
+
 @endsection
 
 @section('event-area')

@@ -70,7 +70,7 @@ class SettingsController extends Controller
             'service_name'=>'required|unique:services,service_name',
             'charge_type'=>'required',
             'charge_value'=>'required',
-            'glcode'=>'required'
+            //'glcode'=>'required'
         ]);
         $this->service->setNewService($request);
         session()->flash("success", "<strong>Success!</strong> New service registered.");
@@ -81,7 +81,7 @@ class SettingsController extends Controller
         $this->validate($request,[
             'service'=>'required',
             'edit_service_name'=>'required',
-            'edit_glcode'=>'required',
+            //'edit_glcode'=>'required',
             'edit_charge_type'=>'required',
             'edit_charge_value'=>'required'
         ]);
@@ -113,6 +113,21 @@ class SettingsController extends Controller
         ]);
         $this->company->updateSenderId($request);
         session()->flash("success", "Your sender ID settings were updated successfully. Hold on for verification.");
+        return back();
+    }
+
+    public function updateBankDetails(Request $request){
+        $this->validate($request,[
+            'bank_name'=>'required',
+            'account_name'=>'required',
+            'account_no'=>'required'
+        ],[
+            'bank_name.required'=>'Enter bank name',
+            'account_name.required'=>'Enter account name',
+            'account_no.required'=>'Enter account number'
+        ]);
+        $this->company->setBankDetails($request);
+        session()->flash("success", "Record updated!");
         return back();
     }
 }

@@ -13,7 +13,7 @@ class CreateThemesTable extends Migration
      */
     public function up()
     {
-        Schema::create('theme', function (Blueprint $table) {
+        Schema::create('themes', function (Blueprint $table) {
             $table->id();
             $table->string('theme');
             $table->string('theme_name')->nullable();

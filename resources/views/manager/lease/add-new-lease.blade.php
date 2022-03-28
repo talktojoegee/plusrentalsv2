@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Add New Lease
+
 @endsection
 @section('current-page-brief')
 
@@ -22,7 +22,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Add New Lease</h5>
-                    <p>Add a new lease to the system using the form below.</p>
+                    <p><strong class="text-danger">NOTE:</strong> This process will make an applicant due for ...</p>
                 </div>
 
                 <div class="row">
@@ -108,20 +108,6 @@
                                                 <i class="text-danger mt-2">{{$message}}</i>
                                                 @enderror
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 col-sm-12">
-                                            <div class="checkbox-fade fade-in-primary">
-                                                <label>
-                                                    <input type="checkbox" value="1" name="terms_and_conditions">
-                                                    <span class="cr">
-                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                    </span>
-                                                    <span>By clicking submit you are agreeing to the Terms and Conditions.</span>
-                                                </label>
-                                            </div>
-                                            @error('terms_and_conditions')
-                                                <i class="text-danger mt-2">{{$message}}</i>
-                                            @enderror
                                         </div>
 
                                     </div>

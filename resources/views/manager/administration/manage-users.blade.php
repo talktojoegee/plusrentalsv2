@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Manage Team
+
 @endsection
 @section('current-page-brief')
 
@@ -28,7 +28,8 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-sm-12">
-                            <p>This list consists of all users - active and inactive ones.</p>
+                            <h5 class="sub-title">Manage Team</h5>
+                            <p>Manage your team members from here.</p>
                             <table id="focus-key" class="table table-striped table-bordered nowrap dataTable" role="grid" aria-describedby="focus-key_info" style="position: relative;">
                                 <thead>
                                 <tr role="row">

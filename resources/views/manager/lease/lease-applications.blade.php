@@ -11,7 +11,7 @@
 @endsection
 
 @section('event-area')
-    @include('manager.lease.partials._menu')
+    @include('manager.lease.partials._menu-application')
 @endsection
 @section('extra-styles')
     <link rel="stylesheet" type="text/css" href="\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">

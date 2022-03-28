@@ -4,18 +4,15 @@
 @endsection
 
 @section('current-page')
-    Manage Permissions
+
 @endsection
 @section('current-page-brief')
-    Manage Permissions
+
 @endsection
 
 @section('event-area')
     <div class="btn-group">
-        <a class="btn btn-primary btn-mini" href="{{route('compose-email')}}"><i class="icofont icofont-tags"></i>Compose Email</a>
-        <a class="btn btn-secondary btn-mini" href="{{route('manage-email-templates')}}"><i class="icofont icofont-tags"></i>Manage Email Templates</a>
-        <a class="btn btn-warning btn-mini" href="{{route('new-email-template')}}"><i class="icofont icofont-tasks"></i>Add New Email Template</a>
-        <a class="btn btn-danger btn-mini" href=""><i class="icofont icofont-megaphone"></i>Reports</a>
+        <a class="btn btn-primary btn-mini" href="{{url()->previous()}}"><i class="ti-back-left"></i>Go Back</a>
     </div>
 @endsection
 @section('extra-styles')

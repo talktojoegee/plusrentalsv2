@@ -13,7 +13,8 @@ class ModuleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:manager');
+        //$this->middleware('auth:admin');
         $this->module = new Module();
         $this->modulepermission = new ModulePermission();
         $this->permission = new Permission();

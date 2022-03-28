@@ -134,6 +134,15 @@
                             <a href="{{route('login')}}" class="form-forgot">Have an account? Login</a>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            {!! NoCaptcha::renderJs() !!}
+                            {!! NoCaptcha::display() !!}
+                            @error('g-recaptcha-response')
+                            <i class="text-danger">{{$message}}</i>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="col-12">
                         <div class="form-group">
                             <button type="submit" class="btn btn-inline">

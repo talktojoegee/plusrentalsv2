@@ -33,8 +33,8 @@ Route::get('/tips', [App\Http\Controllers\Resident\HomeController::class, 'tips'
 Route::get('/terms', [App\Http\Controllers\Resident\HomeController::class, 'terms'])->name('terms');
 Route::get('/policies', [App\Http\Controllers\Resident\HomeController::class, 'policies'])->name('policies');
 
-#Payment integration ronoute
-Route::post('/make-payment', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('make-payment');
+#Payment integration route
+Route::post('/make-payment', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('make-online-payment');
 Route::get('/process-payment', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 Route::get('/subscription', [App\Http\Controllers\Manager\AccountingController::class, 'showOurPricingForm'])->name('subscription');
 Route::post('/subscription', [App\Http\Controllers\PaymentController::class, 'validateSubscription']);
@@ -129,7 +129,7 @@ Route::prefix('/bills')->group(function(){
     Route::get('/approve-bill/{slug}', [App\Http\Controllers\Manager\BillController::class, 'approveBill'])->name('approve-bill');
     Route::get('/send-bill-via-email/{slug}', [App\Http\Controllers\Manager\BillController::class, 'sendBillAsEmail'])->name('send-bill-via-email');
     Route::get('/make-payment/{slug}', [App\Http\Controllers\Manager\BillController::class, 'makePayment'])->name('make-payment');
-    Route::post('/make-payment', [App\Http\Controllers\Manager\BillController::class, 'processNewPayment'])->name('process-payment');
+    Route::post('/make-payment', [App\Http\Controllers\Manager\BillController::class, 'processNewPayment'])->name('process-bill-payment');
     Route::get('/manage/payment/{ref}', [App\Http\Controllers\Manager\BillController::class, 'viewPayment'])->name('view-payment-detail');
 
     Route::get('manage/payment/approve/{ref}', [App\Http\Controllers\Manager\BillController::class, 'approvePayment'])->name('approve-payment');
@@ -144,6 +144,7 @@ Route::prefix('settings')->group(function(){
     Route::get('/service-settings', [App\Http\Controllers\Manager\SettingsController::class, 'showGeneralServiceSettingsForm'])->name('service-settings');
     Route::post('/service-settings', [App\Http\Controllers\Manager\SettingsController::class, 'registerNewService']);
     Route::post('/update-service', [App\Http\Controllers\Manager\SettingsController::class, 'updateService'])->name('update-service');
+    Route::post('/update-bank-details', [App\Http\Controllers\Manager\SettingsController::class, 'updateBankDetails'])->name('update-bank-details');
 });
 Route::post('/get-location', [App\Http\Controllers\Resident\CustomerController::class, 'getLocations']);
 Route::post('/get-subcategories', [App\Http\Controllers\Resident\CustomerController::class, 'getSubcategories']);
@@ -171,12 +172,16 @@ Route::get('/dashboard', [App\Http\Controllers\Manager\HomeController::class, 'd
 */
 Route::get('/add-new-lease', [App\Http\Controllers\Manager\LeaseController::class, 'showNewLeaseForm'])->name('add-new-lease');
 Route::post('/add-new-lease', [App\Http\Controllers\Manager\LeaseController::class, 'storeNewLease']);
+
+Route::get('/add-new-tenant', [App\Http\Controllers\Manager\TenantController::class, 'showNewTenantForm'])->name('add-new-tenant');
+
+
 Route::get('/lease-applications', [App\Http\Controllers\Manager\LeaseController::class, 'leaseApplications'])->name('lease-applications');
 Route::get('/new-lease-application', [App\Http\Controllers\Manager\LeaseController::class, 'showAddNewLeaseApplicationForm'])->name('add-lease-application');
 Route::post('/new-lease-application', [App\Http\Controllers\Manager\LeaseController::class, 'saveNewLeaseApplication']);
 Route::get('/generate-invoice-for/{applicant}/{property}', [App\Http\Controllers\Manager\LeaseController::class, 'generateNewInvoiceFor'])->name('generate-invoice-for');
 Route::post('/lease/generate-invoice-for', [App\Http\Controllers\Manager\LeaseController::class, 'saveApplicantNewInvoice'])->name('lease-generate-invoice-for');
-Route::get('/leases', [App\Http\Controllers\Manager\LeaseController::class, 'showLeases'])->name('leases');
+Route::get('/manage-leases', [App\Http\Controllers\Manager\LeaseController::class, 'showLeases'])->name('leases');
 Route::post('/lease/get-property/', [App\Http\Controllers\Manager\LeaseController::class, 'getProperty']);
 Route::post('/lease/get-applicant/', [App\Http\Controllers\Manager\LeaseController::class, 'getApplicant']);
 #Route::get('/lease/application/{slug}', [App\Http\Controllers\Manager\LeaseController::class, 'viewLeaseApplication'])->name('view-lease-application');

@@ -1,13 +1,13 @@
 @extends('layouts.master-layout')
 @section('title')
-    {{config('app.name')}}'s Modules
+     Modules
 @endsection
 
 @section('current-page')
-    {{config('app.name')}}'s Modules
+    Modules
 @endsection
 @section('current-page-brief')
-    {{config('app.name')}}'s Modules
+    Modules
 @endsection
 
 @section('event-area')
