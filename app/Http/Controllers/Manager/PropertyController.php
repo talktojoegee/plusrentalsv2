@@ -65,7 +65,7 @@ class PropertyController extends Controller
             'property_name'=>'required',
             'location'=>'required',
             'area'=>'required',
-            'address'=>'required',
+            //'address'=>'required',
             'frequency'=>'required',
             'rental_price'=>'required',
             'listing_type'=>'required'

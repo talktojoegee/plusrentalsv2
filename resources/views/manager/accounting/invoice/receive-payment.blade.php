@@ -4,7 +4,7 @@
 @endsection
 
 @section('current-page')
-    Receive Payment for Invoice No.: <span class="text-primary">{{$invoice->invoice_no ?? ''}}</span>
+    Invoice No.: <span class="">{{$invoice->invoice_no ?? ''}}</span>
 @endsection
 @section('current-page-brief')
 
@@ -139,14 +139,14 @@
         <div class="col-lg-9 col-xl-9">
             <form action="{{route('process-offline-payment')}}" method="post" autocomplete="off">
                 @csrf
-                <div class="invoice-box" id="receiptWrapper">
+                <div class="invoice-box" id="receiptWrapper" style="background: #fff;">
                     <table cellpadding="0" cellspacing="0">
                         <tr class="top">
                             <td colspan="6">
                                 <table>
                                     <tr>
                                         <td class="title">
-                                            <img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" />
+                                            <img src="/assets/drive/{{$invoice->getCompany->logo ?? 'logo.png'}}" style="width: 64px; max-width: 300px" />
                                         </td>
 
                                         <td>

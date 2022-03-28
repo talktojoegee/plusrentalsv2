@@ -114,14 +114,14 @@
 @section('main-content')
     <div class="row" >
         <div class="col-lg-12 col-xl-12">
-            <div class="invoice-box" id="receiptWrapper">
+            <div class="invoice-box" id="receiptWrapper" style="background: #fff;">
                 <table cellpadding="0" cellspacing="0">
                     <tr class="top">
                         <td colspan="6">
                             <table>
                                 <tr>
                                     <td class="title">
-                                        <img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" />
+                                        <img src="/assets/drive/{{$receipt->getCompany->logo ?? 'logo.png'}}" style="width: 64px; max-width: 300px" />
                                     </td>
 
                                     <td>

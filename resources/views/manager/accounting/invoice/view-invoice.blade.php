@@ -135,9 +135,9 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-9 col-xl-9">
-            <div class="invoice-box" id="receiptWrapper">
+    <div class="row" >
+        <div class="col-lg-9 col-xl-9" >
+            <div class="invoice-box" id="receiptWrapper" style="background: #fff;">
                 <table cellpadding="0" cellspacing="0">
                     <tr class="top">
                         <td colspan="6">
