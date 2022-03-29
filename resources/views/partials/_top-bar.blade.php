@@ -47,11 +47,6 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('subscription')}}">
-                                            <i class="ti-paint-bucket"></i> Theme Preference
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a href="{{route('logout')}}">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>

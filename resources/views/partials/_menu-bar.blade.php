@@ -1,4 +1,4 @@
-<nav class="pcoded-navbar" style="background: none;">
+<nav class="pcoded-navbar text-muted" style="background: none;">
     <div class="pcoded-inner-navbar" style="background: none;">
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
@@ -253,41 +253,6 @@
                     <li class=" ">
                         <a href="{{ route('add-new-user') }}">
                             <span class="pcoded-mtext">Add New User</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{route('manage-roles')}}">
-                            <span class="pcoded-mtext">Manage Roles</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{route('manage-permissions')}}">
-                            <span class="pcoded-mtext">Manage Permissions</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{ route('app-modules') }}">
-                            <span class="pcoded-mtext">Modules</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{ route('module-manager') }}">
-                            <span class="pcoded-mtext">Module Manager</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{ route('manage-theme') }}">
-                            <span class="pcoded-mtext">Manager Themes</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{ route('manage-faqs') }}">
-                            <span class="pcoded-mtext">FAQs</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="{{ route('manage-posts') }}">
-                            <span class="pcoded-mtext">Articles</span>
                         </a>
                     </li>
                 </ul>

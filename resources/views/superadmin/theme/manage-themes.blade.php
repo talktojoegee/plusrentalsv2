@@ -1,4 +1,4 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin-layout')
 @section('title')
     Manage Themes
 @endsection
@@ -34,7 +34,7 @@
                         @foreach ($themes as $theme)
                             <div class="col-lg-4 col-sm-6">
                                 <label style="cursor: pointer;">
-                                    <input type="radio" @if($theme->id == Auth::user()->getUserTheme->active_theme) checked="checked" @endif name="backgroundTheme" value="{{$theme->id}}" data-background="{{$theme->theme}}" data-scheme="{{$theme->color_scheme}}">
+                                    <input type="radio"  name="backgroundTheme" value="{{$theme->id}}" data-background="{{$theme->theme}}" data-scheme="{{$theme->color_scheme}}">
                                     <span class="haha-img"></span>
                                     {{$theme->theme_name ?? ''}}
                                 </label>

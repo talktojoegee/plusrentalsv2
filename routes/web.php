@@ -316,14 +316,6 @@ Route::prefix('administration')->group(function() {
     Route::get('/profile/{slug}', [App\Http\Controllers\Manager\AdministrationController::class, 'viewProfile'])->name('view-profile');
     Route::post('/update-profile', [App\Http\Controllers\Manager\AdministrationController::class, 'updateProfile'])->name('update-manager-profile');
     Route::post('/change-manager-password', [App\Http\Controllers\Manager\AdministrationController::class, 'changePassword'])->name('change-manager-password');
-
-    Route::get('/manage-roles', [App\Http\Controllers\Manager\AdministrationController::class, 'manageRoles'])->name('manage-roles');
-    Route::post('/new-role', [App\Http\Controllers\Manager\AdministrationController::class, 'storeNewRole']);
-    Route::post('/edit-role', [App\Http\Controllers\Manager\AdministrationController::class, 'editRole'])->name('edit-role');
-    Route::get('/manage-permissions', [App\Http\Controllers\Manager\AdministrationController::class, 'managePermissions'])->name('manage-permissions');
-    Route::post('/new-permission', [App\Http\Controllers\Manager\AdministrationController::class, 'storeNewPermission'])->name('add-new-permission');
-    Route::get('/theme/manage/theme', [App\Http\Controllers\Manager\AdministrationController::class, 'manageThemes'])->name('manage-theme');
-    Route::post('/manage-theme', [App\Http\Controllers\Manager\AdministrationController::class, 'themeGalleryUpload']);
 });
 
 Route::prefix('/messages')->group(function(){
@@ -399,7 +391,15 @@ Route::prefix('/post')->group(function(){
 });
 
 Route::get('/admin-route', [App\Http\Controllers\SuperAdminAuth\LoginController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin-route', [App\Http\Controllers\SuperAdminAuth\LoginController::class, 'showLoginForm']);
+Route::post('/admin-route', [App\Http\Controllers\SuperAdminAuth\LoginController::class, 'adminLogin']);
 Route::prefix('/admin')->group(function(){
     Route::get('/duties', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'index'])->name('duties');
+
+    Route::get('/manage-roles', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'manageRoles'])->name('manage-roles');
+    Route::post('/new-role', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'storeNewRole']);
+    Route::post('/edit-role', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'editRole'])->name('edit-role');
+    Route::get('/manage-permissions', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'managePermissions'])->name('manage-permissions');
+    Route::post('/new-permission', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'storeNewPermission'])->name('add-new-permission');
+    Route::get('/theme/manage/theme', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'manageThemes'])->name('manage-theme');
+    Route::post('/manage-theme', [App\Http\Controllers\SuperAdmin\DutiesController::class, 'themeGalleryUpload']);
 });

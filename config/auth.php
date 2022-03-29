@@ -98,7 +98,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\RentalOwner::class,
         ],
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\SuperAdmin::class,
         ],

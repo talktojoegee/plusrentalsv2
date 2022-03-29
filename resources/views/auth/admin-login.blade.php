@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{config('app.name')}} | Admin Login </title>
+    <title>{{config('app.name')}} | Super Admin Login </title>
     <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
@@ -41,7 +41,7 @@
                     </div>
                 @endif
 
-                <form class="{{route('manager-login')}}" method="post">
+                <form class="{{route('admin.login')}}" method="post">
                     @csrf
                     <div class="text-center">
                         <img width="300" src="/images/logo.png" alt="{{config('app.name')}}">
@@ -50,8 +50,8 @@
                         <div class="card-block">
                             <div class="row m-b-20">
                                 <div class="col-md-12">
-                                    <h3 class="text-center">Login</h3>
-                                    <p>Admin Login Screen</p>
+                                    <h5 class="text-center">Super Admin Screen</h5>
+                                    <p class="text-center">Login to your super admin section.</p>
                                 </div>
                             </div>
                             <div class="form-group form-primary">

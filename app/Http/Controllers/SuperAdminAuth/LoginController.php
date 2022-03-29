@@ -41,7 +41,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     public function adminLogin(Request $request){
-        return 'hello';
+        /*return dd($request->all());*/
         $this->validate($request, [
             'email'=>'required|email',
             'password'=>'required'
@@ -54,8 +54,8 @@ class LoginController extends Controller
             'email'=>$request->email,
             'password'=>$request->password, 'account_status'=>1],
             $request->remember)){
-            session()->flash("update_profile", "<strong>Notice: </strong> You're adviced to complete your profile");
-            return redirect()->route('dashboard');
+            session()->flash("success", "<strong>Notice: </strong> You're advised to complete your profile");
+            return redirect()->route('duties');
         }else{
             session()->flash("error", "<strong>Error! </strong> Wrong or invalid login credentials. Try again.");
             return back();
@@ -72,4 +72,5 @@ class LoginController extends Controller
     {
         return Auth::guard('admin');
     }
+
 }

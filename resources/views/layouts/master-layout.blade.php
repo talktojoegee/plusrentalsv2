@@ -15,7 +15,7 @@
                                         <div class="col-lg-6 mt-5">
                                             <div class="page-header-title">
                                                 <div class="d-inline">
-                                                    <h4>@yield('current-page')</h4>
+                                                    <h4 class="text-muted">@yield('current-page')</h4>
                                                     <span style="text-transform: none;">@yield('current-page-brief')</span>
                                                 </div>
                                             </div>
