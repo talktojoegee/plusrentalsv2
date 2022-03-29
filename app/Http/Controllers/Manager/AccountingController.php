@@ -146,17 +146,17 @@ return "Done";*/
        return back();
    }
    public function showOurPricingForm(){
-       $admin_integration = $this->superadminpaymentintegration->getSuperAdminPaymentIntegrationObj();
-       if(!empty($admin_integration)){
+       //$admin_integration = $this->superadminpaymentintegration->getSuperAdminPaymentIntegrationObj();
+      // if(!empty($admin_integration)){
            #Public key
-           $this->setEnv('PAYSTACK_PUBLIC_KEY', $admin_integration->ps_public_key);
+           //$this->setEnv('PAYSTACK_PUBLIC_KEY', $admin_integration->ps_public_key);
            #Secret key
-           $this->setEnv('PAYSTACK_SECRET_KEY', $admin_integration->ps_secret_key);
+           //$this->setEnv('PAYSTACK_SECRET_KEY', $admin_integration->ps_secret_key);
            return view('manager.accounting.our-pricing');
-       }else{
-           session()->flash("error", "<strong>Whoops!</strong> Something went wrong.");
-           return back();
-       }
+      // }else{
+           //session()->flash("error", "<strong>Whoops!</strong> Something went wrong.");
+           //return back();
+       //}
 
    }
 

@@ -88,7 +88,7 @@ class PaymentController extends Controller{
         ));
     }
     public function validateSubscription(Request $request){
-
+        //return back();
         $this->validate($request,[
             'no_of_units'=>'required|min:1',
             'plan_duration'=>'required',

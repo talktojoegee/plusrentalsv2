@@ -1,4 +1,4 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin-layout')
 @section('title')
     Pricing & Features
 @endsection
