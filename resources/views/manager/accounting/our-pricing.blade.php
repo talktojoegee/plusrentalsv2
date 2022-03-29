@@ -12,9 +12,7 @@
 
 @section('event-area')
     <div class="btn-group">
-        <a class="btn btn-secondary btn-mini" href="{{route('lease-applications')}}"><i class="icofont icofont-tags"></i>Manage Accounts</a>
-        <a class="btn btn-primary btn-mini" href="{{route('new-chart-of-account')}}"><i class="icofont icofont-tasks"></i>Add New Account</a>
-        <a class="btn btn-danger btn-mini" href=""><i class="icofont icofont-megaphone"></i>Reports</a>
+        <a class="btn btn-primary btn-mini" href="{{url()->previous()}}"><i class="ti-back-left"></i>Go Back</a>
     </div>
 @endsection
 @section('extra-styles')
@@ -26,9 +24,9 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 ">
                     <div class="pricing-intro">
-                        <h3 class="wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">Pricing Table</h3>
+                        <h5 class="wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">Pricing Table</h5>
                         <p class="wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                            Loream ipsum dummy text loream ipsum dummy text loream ipsum dummy text <br class="hidden-xs"> loream ipsum dummy text. Get the right plan that suits you.
+                            Explore our pricing and choose the one that best suites you.
                         </p>
                         @if($errors->any())
                             {!! implode('', $errors->all("<div class='alert alert-warning' role='alert'>:message</div>")) !!}
